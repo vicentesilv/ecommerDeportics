@@ -65,8 +65,7 @@
     <h3>planeacion de la base de datos</h3>
     <img src="imagenes_documentacion/planificacion_db.png" alt="">
     <p>algo mas por mencionar es que ademas de las tablas se crearon 2 vistas para el manejo de la informacion de producto segun el rol del usuario. dicho lo anterior se realizo de la siguiente manera:</p>
-    <code>create view productos_cliente as select id,nombre,descripcion,stock,imagen,costoVenta from productos where status = 'activo'; <br>
-        create table productos_empleado as select * from productos;</code>
+    <code>create view productos_cliente as select id,nombre,descripcion,stock,imagen,costoVenta from productos where status = 'activo'; <br>create table productos_empleado as select * from productos;</code>
         <br><br>
         <hr>
         <h2>desarrollo del backend</h2>
