@@ -1,63 +1,88 @@
-create Database ecommerceDeportics;
-use ecommerceDeportics;
+-- Crear la base de datos
+CREATE DATABASE ecommerceDeportics;
+USE ecommerceDeportics;
 
-create table usuarios(
-    id int primary key auto_increment,
-    nombre varchar(50) not null,
-    apellido varchar(50) not null,
-    edad int not null,
-    correo varchar(50) not null,
-    contrasena varchar(255) not null,
-    rol enum('admin', 'empleado', 'cliente') not null,
-    domicilio varchar(255) not null,
-    telefono varchar(20) not null,
-    fechaCreado timestamp default current_timestamp,
-
+-- Tabla de usuarios
+CREATE TABLE usuarios (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    edad INT NOT NULL CHECK (edad > 0),
+    correo VARCHAR(50) NOT NULL UNIQUE,
+    contrasena VARCHAR(255) NOT NULL,
+    rol ENUM('admin', 'empleado', 'cliente') NOT NULL,
+    domicilio VARCHAR(255) NOT NULL,
+    telefono VARCHAR(20) NOT NULL,
+    fechaCreado TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-create table productos(
-    id int primary key auto_increment,
-    nombre varchar(50) not null,
-    descripcion varchar(255) not null,
-    stock int not null,
-    imagen varchar(255) not null,
-    costoVenta decimal(10,2) not null,
-    costoProduccion decimal(10,2) not null,
-    status enum('activo', 'inactivo') not null,
-    fechaCreado timestamp default current_timestamp
-    fechaEditado timestamp default current_timestamp on update current_timestamp,
-    creado_por int not null,
-    editado_por int not null,
-    foreign key (editado_por) references usuarios(id) on update cascade,
-    foreign key (creado_por) references usuarios(id)
+-- Tabla de productos
+CREATE TABLE productos (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(50) NOT NULL,
+    descripcion VARCHAR(255) NOT NULL,
+    stock INT NOT NULL,
+    imagen VARCHAR(255) NOT NULL,
+    costoVenta DECIMAL(10, 2) NOT NULL,
+    costoProduccion DECIMAL(10, 2) NOT NULL,
+    status ENUM('activo', 'inactivo') NOT NULL,
+    fechaCreado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fechaEditado TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    creado_por INT NOT NULL,
+    editado_por INT,
+    FOREIGN KEY (creado_por) REFERENCES usuarios(id) ON DELETE RESTRICT,
+    FOREIGN KEY (editado_por) REFERENCES usuarios(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-create table carrito (
-    id int primary key auto_increment,
-    id_producto int not null,
-    id_usuario int not null,
-    cantidad int not null,
-    foreign key (id_producto) references productos(id),
-    foreign key (id_usuario) references usuarios(id)
+-- Tabla de carrito
+CREATE TABLE carrito (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_producto INT NOT NULL,
+    id_usuario INT NOT NULL,
+    cantidad INT NOT NULL,
+    FOREIGN KEY (id_producto) REFERENCES productos(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
-create view productos_cliente as select id,nombre,descripcion,stock,imagen,costoVenta from productos where status = 'activo';
+-- Vista de productos para clientes
+CREATE VIEW productos_cliente AS
+SELECT id, nombre, descripcion, stock, imagen, costoVenta
+FROM productos
+WHERE status = 'activo';
 
-create table productos_empleado as select * from productos;
+-- Vista de productos para empleados
+CREATE VIEW productos_empleado AS
+SELECT *
+FROM productos;
 
-create table pago(
-    id int primary key auto_increment,
-    metodo enum('paypal', 'tarjeta') not null,
-    monto decimal(10,2) not null,
-    estado enum('pendiente', 'aprobado', 'rechazado') not null,
-    fechaPago timestamp default current_timestamp
-    detallesPago text not null,
+-- Tabla de pagos
+CREATE TABLE pago (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    metodo ENUM('paypal', 'tarjeta') NOT NULL,
+    monto DECIMAL(10, 2) NOT NULL,
+    estado ENUM('pendiente', 'aprobado', 'rechazado') NOT NULL,
+    fechaPago TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    numero_tarjeta VARCHAR(20),
+    fecha_vencimiento VARCHAR(5),
+    paypal_correo VARCHAR(50)
 );
-create orden(
-    id int primary key auto_increment,
-    id_usuario int not null,
-    id_pagont int not null,
-    foreign key (id_usuario) references usuarios(id),
-    foreign key (id_pago) references pago(id),
-    fechaOrden timestamp default current_timestamp
+
+-- Tabla de órdenes
+CREATE TABLE orden (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_usuario INT NOT NULL,
+    id_pago INT NOT NULL,
+    fechaOrden TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+    FOREIGN KEY (id_pago) REFERENCES pago(id)
+);
+
+-- Tabla intermedia para relacionar órdenes y productos
+CREATE TABLE orden_productos (
+    id_orden INT NOT NULL,
+    id_producto INT NOT NULL,
+    cantidad INT NOT NULL,
+    PRIMARY KEY (id_orden, id_producto),
+    FOREIGN KEY (id_orden) REFERENCES orden(id),
+    FOREIGN KEY (id_producto) REFERENCES productos(id)
 );
