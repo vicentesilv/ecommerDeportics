@@ -13,10 +13,12 @@ app.use(fileUpload({createParentPath: true}));
 
 // importacion de rutas
 const auth = require('./routes/auth');
-
+const usuarios = require('./routes/usuarios');
 
 //rutas de la api   
-app.use('/api/auth/', auth);
+app.use('/api/auth', auth);
+app.use('/api/usuarios', usuarios);
+
 
 
 

@@ -33,6 +33,8 @@ const inicioSesion = async(req,res) => {
     }
 }
 
+
+
 module.exports = {
     registro,
     inicioSesion
