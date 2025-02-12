@@ -4,14 +4,19 @@ const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const dotenv = require('dotenv');
 
+// configuraciones
 const app = express();
 dotenv.config();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(fileUpload({createParentPath: true}));
 
-//routes api   
+// importacion de rutas
+const auth = require('./routes/auth');
 
+
+//rutas de la api   
+app.use('/api/auth/', auth);
 
 
 
