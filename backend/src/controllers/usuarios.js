@@ -9,6 +9,17 @@ const obtenerUsuarios = async (req, res) => {
     }
 }
 
+const buscarUsuarios = async (req, res) => {
+    const {nombre} = req.params;
+    try {
+        const [usuarios] = await db.query('select * from usuarios where nombre like ?', [`%${nombre}%`]);
+        res.json(usuarios);
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+}
+
 module.exports = {
-    obtenerUsuarios
+    obtenerUsuarios,
+    buscarUsuarios
 }
