@@ -34,28 +34,41 @@ const inicioSesion = async(req,res) => {
     }
 }
 
-
-// recuperacion  y restablicimiento de la contraseña por correo
+// Recuperación de contraseña
 const recuperarContrasena = async (req, res) => {
-    const {email }= req.body
-    const user = await db.query('SELECT * FROM usuarios WHERE correo = ?', [email])
-    if (!user) return res.status(400).json({message: 'El correo no existe'})
-    const resetToken = jwt.sign({id: user[0].id}, process.env.JWT_SECRET, {expiresIn: '10m'})
-    const resetLink = `http://localhost:3000/restablecer-contrasena/${resetToken}`
-    const mailOptions = {
-        from: "vicente18aldahirsilva@gmail.com",
-        to: user.email,
-        subject: 'Recuperación de contraseña',
-        text: `Haz clic en el siguiente enlace para restablecer tu contraseña: ${resetLink}`
-    };
-    transporteEmail.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return res.status(500).json({message: error.message});
-        }
-        res.json({message: 'Correo enviado'});
-    });
-}
+    const { correo } = req.body;
 
+    try {
+        // Buscar al usuario por su correo
+        const [user] = await db.query('SELECT * FROM usuarios WHERE correo = ?', [correo]);
+        if (!user) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        // Generar un token de restablecimiento de contraseña
+        const resetToken = jwt.sign({ id: usuario.id,correo: user.correo }, process.env.JWT_SECRET, { expiresIn: '15m' });
+
+        // Enviar correo con el enlace de restablecimiento
+        const resetLink = `http://localhost:3000/reset-password?token=${resetToken}`;
+        const mailOptions = {
+            from: 'vicente18aldahirsilva@gmail.com',
+            to: correo,
+            subject: 'Recuperación de contraseña',
+            text: `Haz clic en el siguiente enlace para restablecer tu contraseña: ${resetLink}`
+        };
+
+        transporteEmail.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.error('Error al enviar el correo:', error);
+                return res.status(500).json({ message: 'Error al enviar el correo' });
+            }
+            res.json({ message: 'Correo enviado correctamente' });
+        });
+    } catch (error) {
+        console.error('Error en recuperarContrasena:', error);
+        res.status(500).json({ message: 'Error en el servidor' });
+    }
+};
 
 module.exports = {
     registro,

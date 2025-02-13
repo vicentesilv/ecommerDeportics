@@ -3,7 +3,7 @@ const transporteEmail = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: "vicente18aldahirsilva@gmail.com",
-        pass: "vicente1819"
+        pass: ""
     }
 })
 
