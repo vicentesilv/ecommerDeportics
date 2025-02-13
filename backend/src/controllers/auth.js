@@ -4,6 +4,26 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const transporteEmail = require('../config/correo.config');
 
+
+const preRegistro = async (req,res) => {
+    const {nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono} = req.body;
+    if(!validator.isEmail(correo)) return res.status(400).json({message: 'Correo no válido'});
+    try{
+        const [preRegistro] = await db.query('select * from usuarios where correo = ?', [correo]);
+        if(preRegistro.length > 0) return res.status(400).json({message: 'El correo ya se encuentra registrado'});
+        const token = jwt.sign({id,nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono}, process.env.JWT_SECRET, {expiresIn: '15m'});
+        const link = `${process.env.urlApi}registro?token=${token}`;
+        await transporteEmail.sendMail({
+            from: process.env.mail,
+            to: correo,
+            subject: "Confirmar registro",
+            html: `<p>Haz clic en el siguiente enlace para confirmar tu registro:</p><a href="${link}">${link}</a>`,
+        });
+        res.json({message: 'Correo de confirmación enviado'});
+    }catch(error){
+        return res.status(500).json({message: error.message});
+    }
+}
 const registro = async (req,res) => {
     const {nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono} = req.body;
     const hashedPassword = await bcrypt.hash(contrasena, 10);
@@ -39,38 +59,39 @@ const recuperarContrasena = async (req, res) => {
     const { correo } = req.body;
 
     try {
-        // Buscar al usuario por su correo
-        const [user] = await db.query('SELECT * FROM usuarios WHERE correo = ?', [correo]);
-        if (!user) {
-            return res.status(404).json({ message: 'Usuario no encontrado' });
-        }
-
-        // Generar un token de restablecimiento de contraseña
-        const resetToken = jwt.sign({ id: usuario.id,correo: user.correo }, process.env.JWT_SECRET, { expiresIn: '15m' });
-
-        // Enviar correo con el enlace de restablecimiento
-        const resetLink = `http://localhost:3000/reset-password?token=${resetToken}`;
-        const mailOptions = {
-            from: 'vicente18aldahirsilva@gmail.com',
+        const [rows] = await db.query("SELECT * FROM usuarios WHERE correo = ?", [correo]);
+        if (rows.length === 0) return res.status(404).json({ message: "Correo no registrado" });
+        
+        const resetToken = jwt.sign({ correo }, process.env.JWT_SECRET, { expiresIn: "10m" });
+        const resetLink = `${process.env.urlApi}reset-password?token=${resetToken}`;
+        await db.query("update usuarios set reset_token = ? , reset_token_expiry = date_add(now(), interval 10 minute) where correo = ?", [resetToken, correo]);
+        await transporteEmail.sendMail({
+            from: process.env.mail,
             to: correo,
-            subject: 'Recuperación de contraseña',
-            text: `Haz clic en el siguiente enlace para restablecer tu contraseña: ${resetLink}`
-        };
-
-        transporteEmail.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.error('Error al enviar el correo:', error);
-                return res.status(500).json({ message: 'Error al enviar el correo' });
-            }
-            res.json({ message: 'Correo enviado correctamente' });
+            subject: "Recuperación de contraseña",
+            html: `<p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p><a href="${resetLink}">${resetLink}</a>`,
         });
+        res.json({ message: "Correo de recuperación enviado" });
     } catch (error) {
-        console.error('Error en recuperarContrasena:', error);
-        res.status(500).json({ message: 'Error en el servidor' });
+        res.status(500).json({ message: "Error en el servidor" });
     }
 };
 
+const resetearContrasena = async (req, res) => {
+    const {token, nuevaContrasena} = req.body;
+    try{
+        const decodeToken = jwt.verify(token, process.env.JWT_SECRET);
+        const [rows] = await db.query("select * from usuarios where correo = ? and reset_token = ?", [decodeToken.correo, token]);
+        if (rows.length === 0) return res.status(401).json({ message: "Token inválido" });
+
+        const hashContrasena = await bcrypt.hash(nuevaContrasena, 10);
+        await db.query("update usuarios set contrasena = ?, reset_token = null, reset_token_expiry = null where correo = ?", [hashContrasena, decodeToken.correo]);
+        res.json({ message: "Constraseña restablecida exitosamente" });
+    }catch(error){}
+}
+
 module.exports = {
+    preRegistro,
     registro,
     inicioSesion,
     recuperarContrasena

@@ -11,6 +11,8 @@ CREATE TABLE usuarios (
     correo VARCHAR(50) NOT NULL UNIQUE,
     contrasena VARCHAR(255) NOT NULL,
     rol ENUM('admin', 'empleado', 'cliente') NOT NULL,
+    reset_token VARCHAR(255),
+    reset_token_expiry DATETIME,
     domicilio VARCHAR(255) NOT NULL,
     telefono VARCHAR(20) NOT NULL,
     fechaCreado TIMESTAMP DEFAULT CURRENT_TIMESTAMP
