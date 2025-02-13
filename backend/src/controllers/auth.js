@@ -2,6 +2,7 @@ const db = require('../config/dbConeccion');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const transporteEmail = require('../config/correo.config');
 
 const registro = async (req,res) => {
     const {nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono} = req.body;
@@ -34,8 +35,30 @@ const inicioSesion = async(req,res) => {
 }
 
 
+// recuperacion  y restablicimiento de la contraseña por correo
+const recuperarContrasena = async (req, res) => {
+    const {email }= req.body
+    const user = await db.query('SELECT * FROM usuarios WHERE correo = ?', [email])
+    if (!user) return res.status(400).json({message: 'El correo no existe'})
+    const resetToken = jwt.sign({id: user[0].id}, process.env.JWT_SECRET, {expiresIn: '10m'})
+    const resetLink = `http://localhost:3000/restablecer-contrasena/${resetToken}`
+    const mailOptions = {
+        from: "vicente18aldahirsilva@gmail.com",
+        to: user.email,
+        subject: 'Recuperación de contraseña',
+        text: `Haz clic en el siguiente enlace para restablecer tu contraseña: ${resetLink}`
+    };
+    transporteEmail.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return res.status(500).json({message: error.message});
+        }
+        res.json({message: 'Correo enviado'});
+    });
+}
+
 
 module.exports = {
     registro,
-    inicioSesion
+    inicioSesion,
+    recuperarContrasena
 }
