@@ -24,10 +24,11 @@ const preRegistro = async (req,res) => {
         return res.status(500).json({message: error.message});
     }
 }
+
 const registro = async (req,res) => {
-    const {nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono} = req.body;
-    const hashedPassword = await bcrypt.hash(contrasena, 10);
-    if(!validator.isEmail(correo)) return res.status(400).json({message: 'Correo no válido'});
+    // const {nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono} = req.body;
+    // const hashedPassword = await bcrypt.hash(contrasena, 10);
+    // if(!validator.isEmail(correo)) return res.status(400).json({message: 'Correo no válido'});
     try{
         const [registro] = await db.query('insert into usuarios (nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono) values (?,?,?,?,?,?,?,?)', [nombre,apellido,edad,correo,hashedPassword,rol,domicilio,telefono]);
         res.json(registro);
@@ -63,7 +64,8 @@ const recuperarContrasena = async (req, res) => {
         if (rows.length === 0) return res.status(404).json({ message: "Correo no registrado" });
         
         const resetToken = jwt.sign({ correo }, process.env.JWT_SECRET, { expiresIn: "10m" });
-        const resetLink = `${process.env.urlApi}reset-password?token=${resetToken}`;
+        
+        const resetLink = `${process.env.urlApi}api/auth/resetearContrasena/${resetToken}`;
         await db.query("update usuarios set reset_token = ? , reset_token_expiry = date_add(now(), interval 10 minute) where correo = ?", [resetToken, correo]);
         await transporteEmail.sendMail({
             from: process.env.mail,
@@ -78,21 +80,35 @@ const recuperarContrasena = async (req, res) => {
 };
 
 const resetearContrasena = async (req, res) => {
-    const {token, nuevaContrasena} = req.body;
-    try{
-        const decodeToken = jwt.verify(token, process.env.JWT_SECRET);
-        const [rows] = await db.query("select * from usuarios where correo = ? and reset_token = ?", [decodeToken.correo, token]);
-        if (rows.length === 0) return res.status(401).json({ message: "Token inválido" });
+    const { token } = req.params;
+    const {  nuevaContrasena } = req.body;
 
+    if (!token || !nuevaContrasena) return res.status(400).json({ message: "Token y nueva contraseña son requeridos" });
+
+    try {
+        const decodeToken = jwt.verify(token, process.env.JWT_SECRET);
+
+        const [rows] = await db.query("SELECT * FROM usuarios WHERE correo = ? AND reset_token = ?", [decodeToken.correo, token]);
+        if (rows.length === 0)  return res.status(401).json({ message: "Token inválido o expirado" });
+        
+        const usuario = rows[0];
+        if (usuario.reset_token_expiry < new Date()) return res.status(401).json({ message: "Token expirado" });
         const hashContrasena = await bcrypt.hash(nuevaContrasena, 10);
-        await db.query("update usuarios set contrasena = ?, reset_token = null, reset_token_expiry = null where correo = ?", [hashContrasena, decodeToken.correo]);
-        res.json({ message: "Constraseña restablecida exitosamente" });
-    }catch(error){}
-}
+
+        await db.query("UPDATE usuarios SET contrasena = ?, reset_token = NULL, reset_token_expiry = NULL WHERE correo = ?", [hashContrasena, decodeToken.correo]);
+        res.json({ message: "Contraseña restablecida exitosamente" });
+    } catch (error) {
+        if (error instanceof jwt.JsonWebTokenError) {
+            return res.status(401).json({ message: "Token inválido" });
+        }
+        res.status(500).json({ message: "Error interno del servidor" });
+    }
+};
 
 module.exports = {
     preRegistro,
     registro,
     inicioSesion,
-    recuperarContrasena
+    recuperarContrasena,
+    resetearContrasena
 }
