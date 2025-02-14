@@ -6,12 +6,12 @@ const transporteEmail = require('../config/correo.config');
 
 
 const preRegistro = async (req,res) => {
-    const {nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono} = req.body;
+    const {nombre,apellido,edad,correo,contrasena,domicilio,telefono} = req.body;
     if(!validator.isEmail(correo)) return res.status(400).json({message: 'Correo no válido'});
     try{
         const [preRegistro] = await db.query('select * from usuarios where correo = ?', [correo]);
         if(preRegistro.length > 0) return res.status(400).json({message: 'El correo ya se encuentra registrado'});
-        const token = jwt.sign({nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono}, process.env.JWT_SECRET, {expiresIn: '15m'});
+        const token = jwt.sign({nombre,apellido,edad,correo,contrasena,domicilio,telefono}, process.env.JWT_SECRET, {expiresIn: '15m'});
         const link = `${process.env.urlApi}api/auth/registro/${token}`;
         await transporteEmail.sendMail({
             from: process.env.mail,
@@ -30,10 +30,10 @@ const registro = async (req,res) => {
     // const hashedPassword = await bcrypt.hash(contrasena, 10);
     // if(!validator.isEmail(correo)) return res.status(400).json({message: 'Correo no válido'});
     const {token} = req.params;
-    const {nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono} = jwt.verify(token, process.env.JWT_SECRET);
+    const {nombre,apellido,edad,correo,contrasena,domicilio,telefono} = jwt.verify(token, process.env.JWT_SECRET);
     const hashedPassword = await bcrypt.hash(contrasena, 10);
     try{
-        const [registro] = await db.query('insert into usuarios (nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono) values (?,?,?,?,?,?,?,?)', [nombre,apellido,edad,correo,hashedPassword,rol,domicilio,telefono]);
+        const [registro] = await db.query('insert into usuarios (nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono) values (?,?,?,?,?,cliente,?,?)', [nombre,apellido,edad,correo,hashedPassword,rol,domicilio,telefono]);
         res.json(registro);
     }catch(error){
         return res.status(500).json({message: error.message});
