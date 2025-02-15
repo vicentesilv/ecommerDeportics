@@ -9,15 +9,19 @@ const app = express();
 dotenv.config();
 app.use(cors());
 app.use(bodyParser.json());
+
+// configuracion de fileUpload para la obtencion de imagenes
 app.use(fileUpload({createParentPath: true}));
 
 // importacion de rutas
 const auth = require('./routes/auth');
 const usuarios = require('./routes/usuarios');
+const productos = require('./routes/productos');
 
 //rutas de la api   
 app.use('/api/auth', auth);
 app.use('/api/usuarios', usuarios);
+app.use('/api/productos', productos);  
 
 
 
