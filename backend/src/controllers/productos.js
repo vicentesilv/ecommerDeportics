@@ -42,6 +42,7 @@ const eliminarProducto = async (req, res) => {
         return res.status(500).json({message: error.message});
     }
 }
+
 const editarProducto = async (req, res) => {
     const {id} = req.params;
     const {editadopor,nombre,descripcion,stock,costoVenta,costoProduccion,status} = req.body;
@@ -52,8 +53,43 @@ const editarProducto = async (req, res) => {
         return res.status(500).json({message: error.message});
     }
 }
+const mostrarProductos = async (req, res) => {
+    try {
+        const [productos] = await db.query('select * from productos');
+        res.json(productos);
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+}
+
+const infoProducto = async (req, res) => {
+    const {id} = req.params;
+    try{
+        const [producto] = await db.query('select * from productos where id = ?', [id]);
+        res.json(producto);
+    }catch{
+        return res.status(500).json({message: error.message});
+    }
+}
+
+const buscarProductos = async (req, res) => {
+    const {nombre} = req.params;
+    try {
+        const [productos] = await db.query('select * from productos where nombre like ?', [`%${nombre}%`]);
+        res.json(productos);
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+}
+
+
+
+
 module.exports = {
     crearProducto,
     eliminarProducto,
-    editarProducto
+    editarProducto,
+    mostrarProductos,
+    infoProducto,
+    buscarProductos
 }
