@@ -95,6 +95,15 @@ const mostrarImagen = async (req, res) => {
     });
 }
 
+const mostrarProductosVendedor = async (req, res) => {
+    const {id} = req.params;
+    try {
+        const [productos] = await db.query('select * from productos where creado_por = ?', [id]);
+        res.json(productos);
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+}
 
 
 
@@ -106,5 +115,6 @@ module.exports = {
     mostrarProductos,
     infoProducto,
     buscarProductos,
-    mostrarImagen
+    mostrarImagen,
+    mostrarProductosVendedor
 }
