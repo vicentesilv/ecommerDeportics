@@ -1,5 +1,5 @@
 const express = require('express');
-const { crearProducto } = require('../controllers/productos');
+const { crearProducto, editarProducto, eliminarProducto } = require('../controllers/productos');
 const router = express.Router();
 // const {obtenerProductos,buscarProductos,infoProducto,eliminarProducto,crearProducto} = require('../controllers/productos');
 
@@ -8,5 +8,7 @@ const router = express.Router();
 // router.get('/infoProducto/:id', infoProducto);
 // router.delete('/eliminarProducto/:id', eliminarProducto);
 router.post('/crearProducto', crearProducto);
+router.put('/editarProducto/:id', editarProducto );
+router.delete('/eliminarProducto/:id', eliminarProducto);
 
 module.exports = router;

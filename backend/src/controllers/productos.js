@@ -9,16 +9,12 @@ const crearProducto = async (req, res) => {
     if (!req.files || !req.files.imagen) {
         return res.status(400).json({ error: 'La imagen es requerida.' });
     }
-
     const imagen = req.files.imagen;
     const nombreArchivo = Date.now() + '-' + imagen.name;
     const rutaImagen = path.join(__dirname, '../imagenes', nombreArchivo);
     const maxWidth = 400;
     const maxHeight = 700;
-
     try {
-        // guardar y redimensionar la imagen
-        
         const [resultado] = await db.query('insert into productos (nombre,descripcion,stock,costoVenta,costoProduccion,status,imagen,creado_por) values (?,?,?,?,?,?,?,?)',
             [nombre, descripcion, stock, costoVenta, costoProduccion, status, nombreArchivo, creadopor]);
         try{
@@ -33,12 +29,31 @@ const crearProducto = async (req, res) => {
             res.status(500).send('Error al procesar la imagen.');
         }
     } catch (error) {
-        console.error(error);
         res.status(500).send('Error al crear el producto.');
     }
-
 }
 
+const eliminarProducto = async (req, res) => {
+    const {id} = req.params;
+    try{
+        const [eliminar] = await db.query('delete from productos where id = ?', [id]);
+        res.json(eliminar);
+    }catch{
+        return res.status(500).json({message: error.message});
+    }
+}
+const editarProducto = async (req, res) => {
+    const {id} = req.params;
+    const {editadopor,nombre,descripcion,stock,costoVenta,costoProduccion,status} = req.body;
+    try{
+        const [editcion] = db.query('update productos set nombre = ?,descripcion = ?,stock = ?,costoVenta = ?,costoProduccion = ?,status = ?,editado_por = ? where id = ?', [nombre,descripcion,stock,costoVenta,costoProduccion,status,editadopor,id]);
+        res.json({message: 'Producto editado exitosamente'});
+    }catch(error){
+        return res.status(500).json({message: error.message});
+    }
+}
 module.exports = {
-    crearProducto
+    crearProducto,
+    eliminarProducto,
+    editarProducto
 }
