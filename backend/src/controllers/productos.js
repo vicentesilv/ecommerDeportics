@@ -2,6 +2,7 @@
 const path = require('path');
 const sharp = require('sharp');
 const db = require('../config/dbConeccion');
+const fs = require('fs');
 
 const crearProducto = async (req, res) => {
     const {creadopor,nombre,descripcion,stock,costoVenta,costoProduccion,status} = req.body;
@@ -82,6 +83,19 @@ const buscarProductos = async (req, res) => {
     }
 }
 
+const mostrarImagen = async (req, res) => {
+    const { nombreImagen } = req.params;
+    const ruta = path.join(__dirname, '../imagenes', nombreImagen);
+
+    fs.access(ruta, fs.constants.F_OK, (err) => {
+        if (err) {
+            return res.status(404).json({ error: 'Imagen no encontrada' });
+        }
+        res.sendFile(ruta);
+    });
+}
+
+
 
 
 
@@ -91,5 +105,6 @@ module.exports = {
     editarProducto,
     mostrarProductos,
     infoProducto,
-    buscarProductos
+    buscarProductos,
+    mostrarImagen
 }
