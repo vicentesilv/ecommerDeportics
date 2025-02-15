@@ -1,4 +1,6 @@
 const db = require('../config/dbConeccion');
+const bcrypt = require('bcrypt');
+const validator = require('validator');
 
 const obtenerUsuarios = async (req, res) => {
     try {
