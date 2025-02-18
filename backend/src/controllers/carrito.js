@@ -32,10 +32,19 @@ const mostrarCarrito = async (req,res) => {
     }
 };
 
-
+const vaciarCarrito = async (req,res) => {
+    const {id} = req.params;
+    try{
+        const [carrito] = await db.query('delete from carrito where id_usuario = ?', [id]);
+        res.json(carrito);
+    }catch(error){
+        return res.status(500).json({message: error.message});
+    }
+};
 
 module.exports = {
     agregarAlCarrito,
     eliminarDelCarrito,
-    mostrarCarrito
+    mostrarCarrito,
+    vaciarCarrito
 }

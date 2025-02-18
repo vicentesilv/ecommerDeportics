@@ -30,6 +30,9 @@ app.use("/api/carrito", carrito);
 
 
 
+
+
+
 //404 error
 app.use((req, res) => res.status(404).send({error: 'ruta no encontrada'}));
 
