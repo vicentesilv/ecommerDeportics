@@ -20,7 +20,28 @@ const crearOrden = async (req, res) => {
     }
 };
 
+const motrarOrdenes = async (req, res) => {
+    try {
+        const [pedidos] = await db.query('select * from orden');
+        res.json(pedidos);
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+};
+
+const buscarOrden = async (req, res) => {
+    const {idUsuario} = req.params;
+    const {id} = req.body;
+    try {
+        const [pedidos] = await db.query('select * from orden where id = ? and id_usuario = ?', [id, idUsuario]);
+        res.json(pedidos);
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+};
 
 module.exports = {
-    crearOrden
+    crearOrden,
+    motrarOrdenes,
+    buscarOrden
 }
