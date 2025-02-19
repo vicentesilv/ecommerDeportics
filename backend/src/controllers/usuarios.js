@@ -48,7 +48,7 @@ const crearUsuario = async (req, res) => {
     try{
         const [usuario] =  await db.query('insert into usuarios (nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono) values (?,?,?,?,?,?,?,?)', [nombre,apellido,edad,correo,hashedPassword,rol,domicilio,telefono]);
         res.json(usuario);
-    }catch{
+    }catch(error){
         return res.status(500).json({message: error.message});
     }
 }
