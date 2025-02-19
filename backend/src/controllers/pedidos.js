@@ -20,6 +20,24 @@ const crearOrden = async (req, res) => {
     }
 };
 
+const cancelarOrden = async (req, res) => {
+    const { idOrden } = req.body;
+
+    try {
+        const [orden] = await db.query('select * from orden where id = ? and estatus = ?', [idOrden, 'pendiente']);
+        if (orden.length === 0) return res.status(400).json({ message: 'La orden no existe o ya fue cancelada/completada' });
+        
+        const [detalles] = await db.query('select * from detalles_orden where id_orden = ?', [idOrden]);
+
+        for (const item of detalles) await db.query('update productos set stock = stock + ? where id = ?', [item.cantidad, item.id_producto]);
+        await db.query('delete from detalles_orden where id_orden = ?', [idOrden]);
+        await db.query('update orden set estatus = ? where id = ?', ['cancelada', idOrden]);
+        res.json({ message: 'Orden cancelada exitosamente' });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
 const motrarOrdenes = async (req, res) => {
     try {
         const [pedidos] = await db.query('select * from orden');
@@ -40,8 +58,11 @@ const buscarOrden = async (req, res) => {
     }
 };
 
+
+
 module.exports = {
     crearOrden,
     motrarOrdenes,
-    buscarOrden
+    buscarOrden,
+    cancelarOrden
 }
