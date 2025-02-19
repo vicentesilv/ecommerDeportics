@@ -31,7 +31,6 @@ CREATE TABLE productos (
     fechaCreado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fechaEditado TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     creado_por INT NOT NULL,
-    editado_por INT,
     FOREIGN KEY (creado_por) REFERENCES usuarios(id) ON DELETE RESTRICT,
     FOREIGN KEY (editado_por) REFERENCES usuarios(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
@@ -73,18 +72,20 @@ CREATE TABLE pago (
 CREATE TABLE orden (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_usuario INT NOT NULL,
-    id_pago INT NOT NULL,
+    total DECIMAL(10, 2) NOT NULL,
+    estatus ENUM('pendiente', 'aprobado', 'rechazado') NOT NULL,
     fechaOrden TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
     FOREIGN KEY (id_pago) REFERENCES pago(id)
 );
 
 -- Tabla intermedia para relacionar órdenes y productos
-CREATE TABLE orden_productos (
-    id_orden INT NOT NULL,
+create table detalles_orden (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_oreden INT NOT NULL,
     id_producto INT NOT NULL,
     cantidad INT NOT NULL,
-    PRIMARY KEY (id_orden, id_producto),
-    FOREIGN KEY (id_orden) REFERENCES orden(id),
+    precio DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (id_oreden) REFERENCES orden(id),
     FOREIGN KEY (id_producto) REFERENCES productos(id)
-);
+)
