@@ -19,6 +19,7 @@ const usuarios = require('./routes/usuarios');
 const productos = require('./routes/productos');
 const carrito = require("./routes/carrito");
 const orden = require("./routes/pedidos");
+const pagos = require("./routes/pagos");
 
 //rutas de la api   
 app.use('/api/auth', auth);
@@ -26,6 +27,7 @@ app.use('/api/usuarios', usuarios);
 app.use('/api/productos', productos);  
 app.use("/api/carrito", carrito);
 app.use("/api/orden", orden);
+app.use("/api/pagos", pagos);
 
 
 

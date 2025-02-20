@@ -5,8 +5,10 @@ const procesarPagoTarjeta = async (monto) => {
         const paymentIntent = await stripe.paymentIntents.create({
             amount: monto * 100, // Stripe espera el monto en centavos
             currency: 'mxn',
-            payment_method: 'pm_card_visa', // Método de pago de prueba
-            confirm: true,
+            automatic_payment_methods: {
+                enabled: true,
+                allow_redirects: 'never', // Evita redireccionamientos
+            },
         });
 
         return paymentIntent.status === 'succeeded' ? 'aprobado' : 'rechazado';
