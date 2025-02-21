@@ -1,11 +1,16 @@
 const paypal = require('@paypal/checkout-server-sdk');
 
-const paypalClient = new paypal.core.PayPalHttpClient(
-    new paypal.core.SandboxEnvironment(
-        process.env.idClientPaypal,
-        process.env.paypalSecretKey
-    )
+// Configura el entorno de PayPal
+const environment = new paypal.core.SandboxEnvironment(
+    process.env.idClientPaypal,
+    process.env.paypalSecretKey
 );
+
+// Crea el cliente de PayPal con un timeout personalizado (en milisegundos)
+const paypalClient = new paypal.core.PayPalHttpClient(environment);
+setTimeout(() => {
+    paypalClient    
+}, 30000); // 30 segundos de timeout
 
 const procesarPagoPaypal = async (monto) => {
     try {
@@ -29,3 +34,7 @@ const procesarPagoPaypal = async (monto) => {
 };
 
 module.exports = { procesarPagoPaypal };
+
+
+
+
