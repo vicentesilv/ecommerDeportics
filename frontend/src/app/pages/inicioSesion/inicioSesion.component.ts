@@ -13,7 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 export class InicioSesionComponent {
   credenciales ={correo: '',contrasena: ''};
   
-  constructor(public authService: AutenticacionService) { }
+  constructor(private authService: AutenticacionService) { }
 
 
   oninicioSesion() {

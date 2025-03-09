@@ -29,16 +29,16 @@ export class RegistroComponent {
     telefono: '',
     fecha_nacimiento: new Date()
   };
-
-funcion(){
-  this.UsuarioData.domicilio = this.dom.calle + ' ' + this.dom.numero + ' ' + this.dom.colonia + ' ' + this.dom.cp;
-  console.log(this.UsuarioData);
-}
- 
-
-  // constructor() { }
-  // ngOnInit(): void {}
-  // form: FormGroup;
-  // loading: boolean = false;
-
+  constructor(private authService: AutenticacionService) { }
+  funcion(){
+    this.UsuarioData.domicilio = this.dom.calle + ' ' + this.dom.numero + ' ' + this.dom.colonia + ' ' + this.dom.cp;
+    this.authService.preRegistro(this.UsuarioData).subscribe(
+      (response) => {
+        console.log('Pre-registro exitoso', response);
+      },
+      (error) => {
+        console.error('Error al pre-registrar', error);
+      }
+    )
+  }
 }
