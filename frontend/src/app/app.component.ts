@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { InicioSesionComponent } from './pages/inicioSesion/inicioSesion.component';
 
 @Component({
   selector: 'app-root',
