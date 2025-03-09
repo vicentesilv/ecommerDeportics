@@ -8,47 +8,47 @@
 <body>
     <div class="registro-contenedor" align="TOP">
         <h2>Registrate</h2>
-        <form action="#" method="POST">
+        <form action="#" method="POST" (ngSubmit)="funcion()">
             <div class="input-group inline">
                 <div class="input-field">
                     <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" placeholder="Ingresa tu nombre" required>
+                    <input type="text" id="nombre" placeholder="Ingresa tu nombre" name="nombre" [(ngModel)]="UsuarioData.nombre" required>
                 </div>
                 <div class="input-field">
                     <label for="edad">Edad</label>
-                    <input type="number" id="edad" placeholder="0" required>
+                    <input type="number" id="edad" placeholder="0" name="edad" [(ngModel)]="UsuarioData.edad" required>
                 </div>
             </div>
             <div class="input-group">
                 <label for="apellidos">Apellidos</label>
-                <input type="text" id="apellidos" placeholder="Ingresa tus apellidos" required>
+                <input type="text" id="apellidos" placeholder="Ingresa tus apellidos" name="apellidos" [(ngModel)]="UsuarioData.apellido" required>
             </div>
             <div class="input-group">
                 <label for="correo">Correo</label>
-                <input type="email" id="correo" placeholder="Ingresa tu email" required>
+                <input type="email" id="correo" placeholder="Ingresa tu email" name="correo" [(ngModel)]="UsuarioData.correo" required>
             </div>
             <div class="input-group">
                 <label for="password">Contraseña</label>
-                <input type="password" id="password" placeholder="Ingresa tu contraseña" required>
+                <input type="password" id="password" placeholder="Ingresa tu contraseña" name="contrasena" [(ngModel)]="UsuarioData.contrasena" required>
             </div>
             <div class="input-group inline">
                 <div class="input-field">
                     <label for="colonia">Colonia</label>
-                    <input type="text" id="colonia" placeholder="Ingresa tu colonia" required>
+                    <input type="text" id="colonia" placeholder="Ingresa tu colonia" name="colonia" [(ngModel)]="dom.colonia" required>
                 </div>
                 <div class="input-field">
                     <label for="cp">Codigo Postal</label>
-                    <input type="number" id="cp" placeholder="00000" min="10000" max="99999" required>
+                    <input type="number" id="cp" placeholder="00000" min="10000" max="99999" name="cp" [(ngModel)]="dom.cp" required>
                 </div>
             </div>
             <div class="input-group inline">
                 <div class="input-field">
                     <label for="calle">Calle</label>
-                    <input type="text" id="calle" placeholder="Nombre de tu calle" required>
+                    <input type="text" id="calle" placeholder="Nombre de tu calle" name="calle" [(ngModel)]="dom.calle" required>
                 </div>
                 <div class="input-field">
                     <label for="nCasa">Numero de casa</label>
-                    <input type="text" id="nCasa" placeholder="Ingresa tu numero de casa" required>
+                    <input type="text" id="nCasa" placeholder="Ingresa tu numero de casa" name="nCasa" [(ngModel)]="dom.numero" required>
                 </div>
             </div>
             <button type="submit" class="register-btn">Registrarse</button>

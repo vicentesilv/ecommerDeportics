@@ -1,13 +1,41 @@
+import { Usuario } from './../../interfaces/usuario';
 import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AutenticacionService } from '../../services/autenticacion.service';
 
 @Component({
   selector: 'RegistroComponent',
-  imports: [],
+  imports: [FormsModule, HttpClientModule],
   templateUrl: './registro.component.html',
-  styleUrl: './registro.component.css'
+  styleUrl: './registro.component.css',
+  providers: [AutenticacionService]
 })
-export class RegistroComponent /*implements OnInit*/ {
+
+export class RegistroComponent {
+  dom = {
+    colonia:'',
+    calle:'',
+    numero:'',
+    cp:'',
+  }
+  UsuarioData: Usuario = {
+    nombre: '',
+    apellido: '',
+    edad: 0,
+    correo: '',
+    contrasena: '',
+    domicilio: '',
+    telefono: '',
+    fecha_nacimiento: new Date()
+  };
+
+funcion(){
+  this.UsuarioData.domicilio = this.dom.calle + ' ' + this.dom.numero + ' ' + this.dom.colonia + ' ' + this.dom.cp;
+  console.log(this.UsuarioData);
+}
+ 
+
   // constructor() { }
   // ngOnInit(): void {}
   // form: FormGroup;
