@@ -21,8 +21,8 @@ export class InicioSesionComponent {
     
     this.authService.inicioSesion(this.credenciales).subscribe(
       (response) => {
-        console.log('Credenciales', this.credenciales);
-        console.log('Inicio de sesión exitoso', response);
+        localStorage.setItem('token', response.token);
+        // sessionStorage.setItem('token', response.token);
       },
       (error) => {
         console.log('Credenciales', this.credenciales);

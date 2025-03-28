@@ -17,7 +17,7 @@ const preRegistro = async (req,res) => {
             from: process.env.mail,
             to: correo,
             subject: "Confirmar registro",
-            html: `<p>Haz clic en el siguiente enlace para confirmar tu registro:</p><a href="${link}">${link}</a>`,
+            html: `<p>Haz clic en el siguiente enlace para confirmar tu registro:</p><a href="${link}">Confirmar Registro</a>`,
         });
         res.json({message: 'Correo de confirmación enviado'});
     }catch(error){
@@ -26,9 +26,6 @@ const preRegistro = async (req,res) => {
 }
 
 const registro = async (req,res) => {
-    // const {nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono} = req.body;
-    // const hashedPassword = await bcrypt.hash(contrasena, 10);
-    // if(!validator.isEmail(correo)) return res.status(400).json({message: 'Correo no válido'});
     const {token} = req.params;
     const {nombre,apellido,edad,correo,contrasena,domicilio,telefono} = jwt.verify(token, process.env.JWT_SECRET);
     const hashedPassword = await bcrypt.hash(contrasena, 10);
