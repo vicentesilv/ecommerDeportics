@@ -19,7 +19,14 @@ const VerificarToken = (req,res,next) => {
 
 };
 
-
+const VerificarRol = (rol) => {
+    return (req, res, next) => {
+        if (req.user.rol !== rol) {
+            return res.status(403).send({message: 'Acceso denegado\n Rol insuficiente'});
+        }
+        next();
+    }
+};
 
 
 
