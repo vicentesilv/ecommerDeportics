@@ -12,7 +12,8 @@ const preRegistro = async (req,res) => {
         const [preRegistro] = await db.query('select * from usuarios where correo = ?', [correo]);
         if(preRegistro.length > 0) return res.status(400).json({message: 'El correo ya se encuentra registrado'});
         const token = jwt.sign({nombre,apellido,edad,correo,contrasena,domicilio,telefono}, process.env.JWT_SECRET, {expiresIn: '15m'});
-        const link = `${process.env.urlApi}api/auth/registro/${token}`;
+        const link = `${process.env.urlConfirmarRegistro}/${token}`;
+        // const link = `${process.env.urlApi}api/auth/registro${token}`;
         await transporteEmail.sendMail({
             from: process.env.mail,
             to: correo,
