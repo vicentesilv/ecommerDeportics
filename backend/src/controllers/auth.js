@@ -31,7 +31,8 @@ const registro = async (req,res) => {
     const {nombre,apellido,edad,correo,contrasena,domicilio,telefono} = jwt.verify(token, process.env.JWT_SECRET);
     const hashedPassword = await bcrypt.hash(contrasena, 10);
     try{
-        const [registro] = await db.query('insert into usuarios (nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono) values (?,?,?,?,?,cliente,?,?)', [nombre,apellido,edad,correo,hashedPassword,rol,domicilio,telefono]);
+        const rol = 'cliente';
+        const [registro] = await db.query('insert into usuarios (nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono) values (?,?,?,?,?,?,?,?)', [nombre,apellido,edad,correo,hashedPassword,rol,domicilio,telefono]);
         res.json(registro);
     }catch(error){
         return res.status(500).json({message: error.message});

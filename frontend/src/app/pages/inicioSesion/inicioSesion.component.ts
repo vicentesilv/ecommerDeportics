@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
+
 @Component({
   selector: 'inicioSesionComponent',
   imports: [FormsModule, HttpClientModule],

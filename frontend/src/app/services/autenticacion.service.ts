@@ -14,8 +14,9 @@ export class AutenticacionService {
     return this.http.post(`${this.apiUrl}/preRegistro`, usuarioData);
   }
 
-  registro(token: string, usuarioData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/registro/${token}`, usuarioData);
+
+  registro(token: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/registro${token}`,{});
   }
 
   inicioSesion(credenciales: any): Observable<any> {

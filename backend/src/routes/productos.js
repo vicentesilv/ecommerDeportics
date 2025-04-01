@@ -3,7 +3,7 @@ const { crearProducto, editarProducto, eliminarProducto, mostrarProductos, busca
 const { VerificarToken } = require('../middleware/middleware.verify');
 const router = express.Router();
 
-router.get('/mostrarProductos', VerificarToken,mostrarProductos);
+router.get('/mostrarProductos',mostrarProductos);
 router.get('/buscarProductos/:nombre', buscarProductos);
 router.get('/infoProducto/:id', infoProducto);
 
