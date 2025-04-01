@@ -45,11 +45,19 @@
                 <div class="input-field">
                     <label for="calle">Calle</label>
                     <input type="text" id="calle" placeholder="Nombre de tu calle" name="calle" [(ngModel)]="dom.calle" required>
+                    <label for="telefono">numero de telefono</label>
+                    <input type="number" id="telefono" placeholder="Ingresa tu telefono" name="telefono" [(ngModel)]="UsuarioData.telefono" required>
                 </div>
                 <div class="input-field">
                     <label for="nCasa">Numero de casa</label>
                     <input type="text" id="nCasa" placeholder="Ingresa tu numero de casa" name="nCasa" [(ngModel)]="dom.numero" required>
+                    <label for="rol">seleccione su rol</label>
+                    <select name="rol" id="rol" [(ngModel)]="UsuarioData.rol" required>
+                        <option value="cliente">cliente</option>
+                        <option value="vendedor">vendedor</option>
+                    </select>
                 </div>
+
             </div>
             <button type="submit" class="register-btn">Registrarse</button>
         </form>

@@ -27,6 +27,7 @@ export class RegistroComponent {
     contrasena: '',
     domicilio: '',
     telefono: '',
+    rol: '',
     fecha_nacimiento: new Date()
   };
   constructor(private authService: AutenticacionService) { }
@@ -34,6 +35,8 @@ export class RegistroComponent {
     this.UsuarioData.domicilio = this.dom.calle + ' ' + this.dom.numero + ' ' + this.dom.colonia + ' ' + this.dom.cp;
     this.authService.preRegistro(this.UsuarioData).subscribe(
       (response) => {
+        console.log("data", this.UsuarioData);
+        
         console.log('Pre-registro exitoso', response);
       },
       (error) => {

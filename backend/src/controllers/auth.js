@@ -6,12 +6,12 @@ const transporteEmail = require('../config/correo.config');
 
 
 const preRegistro = async (req,res) => {
-    const {nombre,apellido,edad,correo,contrasena,domicilio,telefono} = req.body;
+    const {nombre,apellido,edad,correo,contrasena,domicilio,telefono,rol} = req.body;
     if(!validator.isEmail(correo)) return res.status(400).json({message: 'Correo no válido'});
     try{
         const [preRegistro] = await db.query('select * from usuarios where correo = ?', [correo]);
         if(preRegistro.length > 0) return res.status(400).json({message: 'El correo ya se encuentra registrado'});
-        const token = jwt.sign({nombre,apellido,edad,correo,contrasena,domicilio,telefono}, process.env.JWT_SECRET, {expiresIn: '15m'});
+        const token = jwt.sign({nombre,apellido,edad,correo,contrasena,domicilio,telefono,rol}, process.env.JWT_SECRET, {expiresIn: '15m'});
         const link = `${process.env.urlConfirmarRegistro}/${token}`;
         // const link = `${process.env.urlApi}api/auth/registro${token}`;
         await transporteEmail.sendMail({
@@ -28,10 +28,9 @@ const preRegistro = async (req,res) => {
 
 const registro = async (req,res) => {
     const {token} = req.params;
-    const {nombre,apellido,edad,correo,contrasena,domicilio,telefono} = jwt.verify(token, process.env.JWT_SECRET);
+    const {nombre,apellido,edad,correo,contrasena,domicilio,telefono,rol} = jwt.verify(token, process.env.JWT_SECRET);
     const hashedPassword = await bcrypt.hash(contrasena, 10);
     try{
-        const rol = 'cliente';
         const [registro] = await db.query('insert into usuarios (nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono) values (?,?,?,?,?,?,?,?)', [nombre,apellido,edad,correo,hashedPassword,rol,domicilio,telefono]);
         res.json(registro);
     }catch(error){
