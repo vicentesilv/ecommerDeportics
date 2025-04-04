@@ -29,14 +29,6 @@ app.use("/api/carrito", carrito);
 app.use("/api/orden", orden);
 app.use("/api/pagos", pagos);
 
-
-
-
-
-
-
-
-
 //404 error
 app.use((req, res) => res.status(404).send({error: 'ruta no encontrada'}));
 

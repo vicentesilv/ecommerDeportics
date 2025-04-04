@@ -99,3 +99,6 @@ h2 {
 .recuperar-contrasena a:hover{
     text-decoration: underline;
 }
+a{
+    text-decoration: none;
+}

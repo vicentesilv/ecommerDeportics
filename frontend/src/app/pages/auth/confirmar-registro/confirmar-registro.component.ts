@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AutenticacionService } from '../../services/autenticacion.service';
+import { AutenticacionService } from '../../../services/autenticacion.service';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({
@@ -19,11 +19,13 @@ export class ConfirmarRegistroComponent  {
 
   confirmarRegistro(){
     const token = this.route.snapshot.queryParams['token'];
-    console.log(token);
-
     this.authService.registro(token).subscribe(
       (response) => {
-        console.log('Usuario registrado', response);
+        alert('Usuario registrado');
+        window.location.href = '/inicioSesion';
+      },
+      (error) => {
+        alert('Error al registrar el usuario...\n'+ error.error.message);
       }
     );
 

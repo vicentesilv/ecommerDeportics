@@ -31,7 +31,8 @@ const registro = async (req,res) => {
     const {nombre,apellido,edad,correo,contrasena,domicilio,telefono,rol} = jwt.verify(token, process.env.JWT_SECRET);
     const hashedPassword = await bcrypt.hash(contrasena, 10);
     try{
-        const [registro] = await db.query('insert into usuarios (nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono) values (?,?,?,?,?,?,?,?)', [nombre,apellido,edad,correo,hashedPassword,rol,domicilio,telefono]);
+        const [registro] = await db.query('insert into usuarios (nombre,apellido,edad,correo,contrasena,rol,domicilio,telefono) values (?,?,?,?,?,?,?,?)',
+        [nombre,apellido,edad,correo,hashedPassword,rol,domicilio,telefono]);
         res.json(registro);
     }catch(error){
         return res.status(500).json({message: error.message});
@@ -49,7 +50,7 @@ const inicioSesion = async(req,res) => {
         const contrasenaValida = await bcrypt.compare(contrasena, usuario.contrasena); 
         if(!contrasenaValida) return res.status(401).json({message: 'contraseña incorrecta'});
         
-        const token = jwt.sign({id: usuario.id}, process.env.JWT_SECRET, {expiresIn: '1h'});
+        const token = jwt.sign({id: usuario.id, rol: usuario.rol, correo: usuario.correo, nombre: usuario.nombre, apellido: usuario.apellido, edad: usuario.edad, domicilio: usuario.domicilio, telefono: usuario.telefono}, process.env.JWT_SECRET, {expiresIn: '1h'});
         res.json({token});
     }catch(error){
         return res.status(500).json({message: error.message});
@@ -66,7 +67,8 @@ const recuperarContrasena = async (req, res) => {
         
         const resetToken = jwt.sign({ correo }, process.env.JWT_SECRET, { expiresIn: "10m" });
         
-        const resetLink = `${process.env.urlApi}api/auth/resetearContrasena/${resetToken}`;
+        // const resetLink = `${process.env.urlApi}api/auth/resetearContrasena/${resetToken}`;
+        const resetLink = `${process.env.urlResetearContrasena}/${resetToken}`;
         await db.query("update usuarios set reset_token = ? , reset_token_expiry = date_add(now(), interval 10 minute) where correo = ?", [resetToken, correo]);
         await transporteEmail.sendMail({
             from: process.env.mail,
