@@ -9,4 +9,16 @@ import { CommonModule } from '@angular/common';
 })
 export class MenuComponent {
   rol = localStorage.getItem('rol');
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('rol');
+    localStorage.removeItem('nombre');
+    localStorage.removeItem('apellido');
+    localStorage.removeItem('correo');
+    localStorage.removeItem('telefono');
+    localStorage.removeItem('domicilio');
+    localStorage.removeItem('edad');
+    window.location.href = "/";
+  }
 } 

@@ -35,7 +35,7 @@ export class InicioSesionComponent {
             localStorage.setItem('edad', response.edad);
 
 
-            window.location.href = "/"+response.rol+"/panel";
+            window.location.href = "/info";
 
         },
         (error) => {

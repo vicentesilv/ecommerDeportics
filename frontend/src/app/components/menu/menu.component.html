@@ -6,13 +6,18 @@
     <title>Document</title>
 </head>
 <body>
-    <nav class="menu">
-        <ul>
-            <li *ngIf="rol == 'admin'"><a href="#">Home</a></li>
-            <li *ngIf="rol == 'cliente'"><a href="#">About</a></li>
-            <li *ngIf="rol == 'vendedor'"><a href="#">Contact</a></li>
-            <li><a href="#">Cerrar sesion</a></li>
-        </ul>
-    </nav>
+    <div class="menu-container">
+        <a href="/info" class="img"><img src="assets/deportics.png" alt=""></a>
+        <a href="/admin/panel" class="menu-item" *ngIf="rol == 'admin'">Panel</a>
+        <a href="/productos" class="menu-item">Productos</a>
+        <a href="/carrito" class="menu-item" *ngIf="rol == 'cliente'">Carrito</a>
+        <a href="/pedidos" class="menu-item" *ngIf="rol == 'cliente'">Pedidos</a>
+        <a href="/carrito" class="menu-item" *ngIf="rol == 'cliente'">Carrito</a>
+        <a href="/vendedor/panel" class="menu-item" *ngIf="rol == 'vendedor'">Panel</a>
+
+
+        <a href="" class="menu-item menu-item-logout" (click)="logout()">cerrar Sesion</a>
+    </div>
+    
 </body>
 </html>

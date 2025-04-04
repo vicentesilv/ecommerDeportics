@@ -1,0 +1,46 @@
+.menu-container {
+    height: 7vh;
+    width: 95%;
+    margin: 20px 2.5%;
+    background-color: #a5d8ff;
+    border-radius: 15px;
+    display: flex;;
+    align-items: center;
+    border-bottom: 1px solid black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.menu-container .menu-item{
+    height: 5vh;
+    width: 150px;
+    margin: 0 10px;
+    padding: 10px 0;
+    border-radius: 25px;
+    color: black;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: color 0.3s;
+    cursor: pointer;
+}
+.menu-container .menu-item:hover{
+    background-color: #4dabf7;
+    border: 2px solid #a7d4f8;
+    scale: 1.05;
+    transition: all 0.3s;
+    color: white;
+}
+.menu-container a img{
+    height: 6vh;
+    display: flex;
+    justify-content: center;
+    margin-left: 20px;
+    border: 1px solid #000000;
+    border-radius: 50%;
+}
+.menu-container .menu-item-logout{
+    position: absolute;
+    right: 50px;
+}
