@@ -5,7 +5,7 @@ import { ConfirmarRegistroComponent } from './pages/auth/confirmar-registro/conf
 import { RecuperarContrasenaComponent } from './pages/auth/recuperar-contrasena/recuperar-contrasena.component';
 import { ResetearContrasenaComponent } from './pages/auth/resetear-contrasena/resetear-contrasena.component';
 import { AdminPanelComponent } from './pages/admin/admin-panel/admin-panel.component';
-import { InfoComponent } from './components/info/info.component';
+import { InfoComponent } from './views/info/info.component';
 
 export const routes: Routes = [
     // auth routes
@@ -20,8 +20,10 @@ export const routes: Routes = [
     { path: "admin/panel", component: AdminPanelComponent },
 
 
-    // info routes
+    // generals routes
     { path: "info", component: InfoComponent },
+    // { path: "productos", component:  },
+
 
     // default route
     { path: "**", component: InicioSesionComponent },
