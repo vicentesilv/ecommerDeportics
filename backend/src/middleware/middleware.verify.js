@@ -1,28 +1,35 @@
 const jwt = require('jsonwebtoken');
 
 
-const VerificarToken = (req,res,next) => {
-    const authHeader = req.headers['authorization'];   
-    const token = authHeader && authHeader.split(' ')[1];   
-
-    if(!token) return res.status(401).send({message: 'Acceso denegado\n Token requerido'});
-    jwt.verify(token, process.env.JWT_SECRET, (err,user) => {
-        if(err){
-            return res.status(403).send({message: 'Acceso denegado\n Token inválido'});
-        }
-        req.user = user;
-        next();
-    });
-};
-
-const VerificarRol = (rol) => {
+const VerificarToken = (rol) => {
     return (req, res, next) => {
-        if (req.user.rol !== rol) {
-            return res.status(403).send({message: 'Acceso denegado\n Rol insuficiente'});
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1];
+
+        if (!token) {
+            return res.status(401).send({ message: 'Acceso denegado\nToken requerido' });
         }
-        next();
-    }
+
+        jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+            if (err) {
+                return res.status(403).send({ message: 'Acceso denegado\nToken inválido' });
+            }
+
+            req.user = user;
+
+            if (!req.user) {
+                return res.status(403).send({ message: 'Acceso denegado\nToken inválido' });
+            }
+
+            if (req.user.rol !== rol) {
+                return res.status(403).send({ message: 'Acceso denegado\nRol insuficiente' });
+            }
+
+            next();
+        });
+    };
 };
+
 
 
 
@@ -50,7 +57,6 @@ const verificarRolRuta = (req, resl) => {
 
 module.exports = { 
     VerificarToken,
-    verificarRolRuta,
-    VerificarRol
+    verificarRolRuta
 };
 

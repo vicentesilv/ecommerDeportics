@@ -3,16 +3,18 @@ import { Component, OnInit } from '@angular/core';
 import { MenuComponent } from '../../../components/menu/menu.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-admin-panel',
-  imports: [MenuComponent, HttpClientModule, CommonModule],
+  imports: [MenuComponent, HttpClientModule, CommonModule, FormsModule],
   providers: [UsuariosService],
   templateUrl: './admin-panel.component.html',
   styleUrl: './admin-panel.component.css'
 })
 export class AdminPanelComponent implements OnInit{
+  nombreUsuario: string = '';
   constructor(private servicio : UsuariosService) {
     if (!localStorage.getItem('token')) {
       alert('No estas logueado');
@@ -23,19 +25,42 @@ export class AdminPanelComponent implements OnInit{
     }
   }
   ngOnInit(): void {
-    this.mostrarUsuarios();
-    
+      this.mostrarUsuarios();
   }
   usuarios: any[] = [];
   mostrarUsuarios(){
-    this.servicio.mostrarUsuarios().subscribe((data: any) => {
+    let rol = localStorage.getItem('rol');
+    let token = localStorage.getItem('token');
+    if (!token) {
+      alert('No estas logueado');
+      window.location.href = "/inicioSesion";
+      return;
+    } else if(rol != 'admin'){  
+      alert('No tienes permisos para ver esta pagina');
+      window.location.href = "/inicioSesion";
+      return;
+    }
+    this.servicio.mostrarUsuarios(token).subscribe((data: any) => {
       this.usuarios = data;
       console.log(this.usuarios);
       
     });
   }
 
-  eliminarusuario(id: string){}
+  buscarUsuario(){
+    this.servicio.buscarUsuario(this.nombreUsuario, localStorage.getItem('token')!).subscribe((data: any) => {
+      this.usuarios = data;
+      console.log(this.usuarios);
+    }
+    );
+
+  }
+
+  eliminarusuario(id: string){
+    this.servicio.eliminarUsuario(id, localStorage.getItem('token')!).subscribe((data: any) => {
+      this.mostrarUsuarios();
+    });
+  }
 
   
   // this.usuariosService.mostrarUsuarios().subscribe((data: any) => {});

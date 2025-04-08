@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -9,8 +9,17 @@ export class UsuariosService {
 
     constructor(private http: HttpClient) { }
 
-    mostrarUsuarios() {
-        return this.http.get(`${this.apiUrl}/mostrarUsuarios`);
+    mostrarUsuarios(token: string) {
+        let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.get(`${this.apiUrl}/mostrarUsuarios`, { headers });
+    }
+    buscarUsuario(nombre: string, token: string) {
+        let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.get(`${this.apiUrl}/buscarUsuarios/${nombre}`);
+    }
+    eliminarUsuario(id: string, token: string) {
+        let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.delete(`${this.apiUrl}/eliminarUsuario/${id}`, { headers });
     }
 
 }
