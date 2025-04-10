@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Usuario } from '../../interfaces/usuario';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -41,7 +42,8 @@ export class FormUserComponent {
         }, 200);  
       },
       (error) => {
-        alert('Error al crear el usuario...\n error: ' + error);
+        console.log(this.UsuarioData);
+        alert('Error al crear el usuario...\n error: ' + error.error.message);
       }
     )
   }

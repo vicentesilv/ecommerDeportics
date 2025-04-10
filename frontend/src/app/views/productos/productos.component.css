@@ -1,17 +1,60 @@
-.productos{
+.buscar{
     display: flex;
-    flex-direction: row;
-    /* justify-content: space-between; */
-    /* flex-wrap: wrap; */
+    justify-content: end;
+    align-items: center;
+    margin: 20px 100px;
+    padding: 10px;
+}
+.buscar input{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 300px;
+    font-size: 16px;
+    outline: none;
+}
+
+.crear{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin: 20px 100px;
+    padding: 10px;
+}
+.crear button{
+    padding: 10px 20px;
+    background-color: #667eea;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.crear button:hover{
+    background-color: #5a67d8;
+}
+
+
+
+
+
+
+
+
+.productos{
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
     margin: 0 auto;
-    /* padding: 0 20px; */
-    width: 100%;
-    /* max-width: 1200px; */
-    /* gap: 50px; */
+    margin-top: 50px;
 
 }
 .productos .producto{
-    width: 22%;
+    width: 400px;
     height: 600px;
     display: flex;
     flex-direction: column;
@@ -36,11 +79,12 @@
     border-radius: 10px;
     margin-bottom: 20px;
 }
-.productos .producto h3{
+.productos .producto h2{
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 10px;
     text-align: center;
+    display: flex;
+       
 }
 .productos .producto p{
     font-size: 16px;
@@ -61,4 +105,50 @@
 .productos .producto button:hover{
     background-color: #5a67d8;
 }
+.productos .producto .agregarAlCarrito input{
+    width: 50px;
+    height: 30px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+    outline: none;
+}
+.productos .producto .comprarProducto button{
+   margin: 0 10px;
+}
+.vendedor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
 
+
+@media screen and (max-width: 1760px) {
+    .productos{
+        grid-template-columns: 33.33% 33.33% 33.33%;
+        padding: 20px;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        margin-top: 50px;
+    }  
+}@media screen and (max-width: 1402px) {
+    .productos{
+        transition: 3s;
+        gap: 20px;
+    }  
+}
+@media screen and (max-width: 1280px) {
+    .productos{
+        grid-template-columns: 50% 50%;
+    }  
+}
+@media screen and (max-width: 840px) {
+    .productos{
+        grid-template-columns: 100%;
+    }  
+}

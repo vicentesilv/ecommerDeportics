@@ -26,6 +26,7 @@ export class InicioSesionComponent {
         // sessionStorage.setItem('token', response.token);
         this.authService.verificarRolRuta(response.token).subscribe(
           (response) => {
+            localStorage.setItem('id', response.id);
             localStorage.setItem('rol', response.rol);
             localStorage.setItem('nombre', response.nombre);
             localStorage.setItem('apellido', response.apellido);

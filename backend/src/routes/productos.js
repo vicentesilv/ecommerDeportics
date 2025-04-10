@@ -12,7 +12,7 @@ router.get('/mostrarImagen/:nombreImagen', mostrarImagen);
 router.post('/crearProducto', crearProducto);
 router.put('/editarProducto/:id', editarProducto );
 router.delete('/eliminarProducto/:id', eliminarProducto);
-router.get('/mostrarProductosVendedor/:id', mostrarProductosVendedor);
+router.get('/mostrarProductosVendedor/:id',VerificarToken('vendedor'), mostrarProductosVendedor);
 
 
 module.exports = router;

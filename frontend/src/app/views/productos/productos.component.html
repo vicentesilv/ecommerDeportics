@@ -1,15 +1,32 @@
 <app-menu></app-menu>
 
 <div class="productos-container">
-    <h1>Productos</h1>
-    <div class="buscar"></div>
-    <div class="crear"></div>
+    <div class="buscar">
+        <!-- [(ngModel)]="nombreProducto" (keypress)="buscarProducto()" -->
+        <input type="text" placeholder="buscar producto" name="" id="" class="buscar-producto">
+    </div>
+    <div class="crear" *ngIf="token && rol == 'vendedor'">
+        <!-- (click)="abrirModal()" -->
+        <button>Crear Producto</button>
+    </div>
     <div class="productos">
         <div class="producto" *ngFor="let producto of productos">
-            <h2>{{ producto.nombre }}</h2>
+            <h2>{{ producto.nombre }}</h2>  
             <img src="{{ url + producto.imagen }}" alt="{{ producto.nombre }}">
             <p>Precio: {{ producto.costoVenta }}</p>
-            <button *ngIf="token && rol == 'cliente'"  (click)="agregarAlCarrito(producto)" >Agregar al Carrito</button>
+            <div class="agregarAlCarrito" *ngIf="token && rol == 'cliente'">
+                <input type="number" name="" id="" min="1" max="{{producto.stock}}"  [(ngModel)]="producto.cantidad" placeholder="Cantidad " >
+                <button (click)="agregarAlCarrito(producto)" >Agregar al Carrito</button>
+            </div><br>
+            <div class="comprarProducto" *ngIf="token && rol == 'cliente'">
+                <button (click)="agregarAlCarrito(producto)" >comprar producto</button>
+                <button>ver detalles</button>
+            </div>
+            <div class="vendedor" *ngIf="token && rol == 'vendedor' || rol == 'admin'" >
+                <button (click)="eliminarProducto(producto.id)" >Eliminar Producto</button>
+                <button (click)="agregarAlCarrito(producto.id)" >Editar Producto</button>
+            </div>
         </div>
     </div>
 </div>
+

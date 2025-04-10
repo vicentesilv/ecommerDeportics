@@ -31,7 +31,7 @@ CREATE TABLE productos (
     fechaCreado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fechaEditado TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     creado_por INT NOT NULL,
-    FOREIGN KEY (creado_por) REFERENCES usuarios(id) ON DELETE RESTRICT,
+    FOREIGN KEY (creado_por) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
 -- Tabla de carrito
@@ -74,16 +74,16 @@ CREATE TABLE orden (
     total DECIMAL(10, 2) NOT NULL,
     estatus ENUM('pendiente', 'aprobado', 'rechazado') NOT NULL,
     fechaOrden TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
-    );
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE
+);
 
 -- Tabla intermedia para relacionar órdenes y productos
-create table detalles_orden (
+CREATE TABLE detalles_orden (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    id_oreden INT NOT NULL,
+    id_orden INT NOT NULL,
     id_producto INT NOT NULL,
     cantidad INT NOT NULL,
     precio DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (id_oreden) REFERENCES orden(id),
-    FOREIGN KEY (id_producto) REFERENCES productos(id)
-)
+    FOREIGN KEY (id_orden) REFERENCES orden(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_producto) REFERENCES productos(id) ON DELETE CASCADE
+);

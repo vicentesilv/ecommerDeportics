@@ -45,7 +45,7 @@ const verificarRolRuta = (req, resl) => {
                 return resl.json({id,rol,correo,nombre,apellido,edad,domicilio,telefono});
             case 'cliente':
                 return resl.json({id,rol,correo,nombre,apellido,edad,domicilio,telefono});
-            case 'empleado':
+            case 'vendedor':
                 return resl.json({id,rol,correo,nombre,apellido,edad,domicilio,telefono});
             default:
                 return resl.status(403).json({message: 'Acceso denegado\n Rol inválido'});
