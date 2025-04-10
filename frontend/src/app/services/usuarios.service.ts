@@ -15,11 +15,15 @@ export class UsuariosService {
     }
     buscarUsuario(nombre: string, token: string) {
         let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        return this.http.get(`${this.apiUrl}/buscarUsuarios/${nombre}`);
+        return this.http.get(`${this.apiUrl}/buscarUsuarios/${nombre}`, { headers });
     }
     eliminarUsuario(id: string, token: string) {
         let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
         return this.http.delete(`${this.apiUrl}/eliminarUsuario/${id}`, { headers });
+    }
+    crearUsuario(usuario: any, token: string) {
+        let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.post(`${this.apiUrl}/crearUsuario`, usuario, { headers });
     }
 
 }

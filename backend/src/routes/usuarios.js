@@ -4,9 +4,8 @@ const {obtenerUsuarios,buscarUsuarios,infoUsuario,eliminarUsuario,crearUsuario} 
 const { VerificarToken } = require('../middleware/middleware.verify');
 
 router.get('/mostrarUsuarios',VerificarToken('admin'),obtenerUsuarios);
-router.get('/buscarUsuarios/:nombre', buscarUsuarios);
-router.get('/infoUsuario/:id', infoUsuario);
-router.delete('/eliminarUsuario/:id', eliminarUsuario);
-router.post('/crearUsuario', crearUsuario);
+router.get('/buscarUsuarios/:nombre',VerificarToken('admin'), buscarUsuarios);
+router.delete('/eliminarUsuario/:id',VerificarToken('admin'), eliminarUsuario);
+router.post('/crearUsuario',VerificarToken('admin'), crearUsuario);
 
 module.exports = router;

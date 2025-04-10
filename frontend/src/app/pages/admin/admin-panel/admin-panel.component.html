@@ -2,10 +2,19 @@
 
 <h1>Panel de Administracion</h1>
 <div class="buscador">
-    <input type="text" placeholder="buscar usuario" [(ngModel)]="nombreUsuario" id="" class="buscar-usuario">
-    <button (click)="buscarUsuario()" class="buscar">Buscar</button>
+    <input type="text" placeholder="buscar usuario" [(ngModel)]="nombreUsuario" (keypress)="buscarUsuario()" name="" id="" class="buscar-usuario">
+    <!-- <button (click)="buscarUsuario()" class="buscar">Buscar</button> -->
+</div>
+<div class="crearcion">
+    <button (click)="abrirModal()" class="crear">Crear Usuario</button>
 </div>
 <div class="container">
+    <div class="modal">
+        <div class="modal-content">
+            <button class="close" (click)="cerrarModal()">&times;</button> 
+            <app-form-user></app-form-user>
+        </div>
+    </div>
     <table>
         <tr>
             <th>Nombre</th>
@@ -24,7 +33,7 @@
             <td>{{ usuario.telefono }}</td>
             <td>{{ usuario.domicilio }}</td>
             <td>{{ usuario.rol }}</td>
-            <td>{{ usuario.fechaCreado}}</td>   
+            <td>{{ usuario.fechaCreado | date:'dd MMMM yyyy' }}</td>
             <td>
                 <button (click)="eliminarusuario(usuario.id)" class="eliminar">Eliminar</button>
             </td>

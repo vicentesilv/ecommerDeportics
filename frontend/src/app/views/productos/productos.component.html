@@ -1,0 +1,15 @@
+<app-menu></app-menu>
+
+<div class="productos-container">
+    <h1>Productos</h1>
+    <div class="buscar"></div>
+    <div class="crear"></div>
+    <div class="productos">
+        <div class="producto" *ngFor="let producto of productos">
+            <h2>{{ producto.nombre }}</h2>
+            <img src="{{ url + producto.imagen }}" alt="{{ producto.nombre }}">
+            <p>Precio: {{ producto.costoVenta }}</p>
+            <button *ngIf="token && rol == 'cliente'"  (click)="agregarAlCarrito(producto)" >Agregar al Carrito</button>
+        </div>
+    </div>
+</div>

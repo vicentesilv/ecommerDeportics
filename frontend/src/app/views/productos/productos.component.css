@@ -1,0 +1,64 @@
+.productos{
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    /* flex-wrap: wrap; */
+    margin: 0 auto;
+    /* padding: 0 20px; */
+    width: 100%;
+    /* max-width: 1200px; */
+    /* gap: 50px; */
+
+}
+.productos .producto{
+    width: 22%;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+.productos .producto:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.productos .producto img{
+    width: 80%;
+    /* height: 80%; */
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.productos .producto h3{
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.productos .producto p{
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.productos .producto button{
+    background-color: #667eea;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    ;
+}
+.productos .producto button:hover{
+    background-color: #5a67d8;
+}
+

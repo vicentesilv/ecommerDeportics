@@ -4,11 +4,12 @@ import { MenuComponent } from '../../../components/menu/menu.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FormUserComponent } from '../../../components/form-user/form-user.component';
 
 
 @Component({
   selector: 'app-admin-panel',
-  imports: [MenuComponent, HttpClientModule, CommonModule, FormsModule],
+  imports: [MenuComponent, HttpClientModule, CommonModule, FormsModule,FormUserComponent],
   providers: [UsuariosService],
   templateUrl: './admin-panel.component.html',
   styleUrl: './admin-panel.component.css'
@@ -48,6 +49,9 @@ export class AdminPanelComponent implements OnInit{
   }
 
   buscarUsuario(){
+    if (!this.nombreUsuario) {
+      this.mostrarUsuarios();
+    }
     this.servicio.buscarUsuario(this.nombreUsuario, localStorage.getItem('token')!).subscribe((data: any) => {
       this.usuarios = data;
       console.log(this.usuarios);
@@ -62,6 +66,28 @@ export class AdminPanelComponent implements OnInit{
     });
   }
 
+  abrirModal(){
+    let modal = document.querySelector('.modal');
+    if (!modal) {
+      console.error('Modal element not found');
+      return;
+    }
+    modal.getAttribute('style')
+      ?.includes('display: none') 
+       modal.setAttribute('style', 'display: flex')
+    
+  }
+
+  cerrarModal(){
+    let modal = document.querySelector('.modal');
+    if (!modal) {
+      console.error('Modal element not found');
+      return;
+    }
+    modal.getAttribute('style')
+      ?.includes('display: none') 
+       modal.setAttribute('style', 'display: none')
+  }
   
   // this.usuariosService.mostrarUsuarios().subscribe((data: any) => {});
 
