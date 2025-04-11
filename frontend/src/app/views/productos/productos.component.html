@@ -16,7 +16,9 @@
 
       <div class="vendedor" *ngIf="(token && rol == 'vendedor') || rol == 'admin'">
         <button (click)="eliminarProducto(producto.id)">Eliminar Producto</button>
-        <a href="editarProducto/{{producto.id}}"><button>editar producto</button></a>
+        <a href="editarProducto/{{producto.id}}" *ngIf="(token && rol == 'vendedor')"><button>editar producto</button></a>
+        <a href="detallesProducto?idProducto={{producto.id}}" *ngIf="(token && rol == 'admin')"><button>Detalles producto</button></a>
+
       </div>
 
       <div class="agregarAlCarrito" *ngIf="token && rol == 'cliente'">

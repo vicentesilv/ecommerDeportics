@@ -8,6 +8,29 @@
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
+.volver {
+    position: absolute;
+    top: 120px;
+    left: 10%;
+    padding: 10px 20px;
+    background-color: #667eea;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.volver a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.volver:hover {
+    background-color: #5a67d8;
+}
+
+
 h1 {
     text-align: center;
     font-size: 44px;
