@@ -107,7 +107,6 @@ const mostrarProductosVendedor = async (req, res) => {
 
 
 
-
 module.exports = {
     crearProducto,
     eliminarProducto,
@@ -116,5 +115,5 @@ module.exports = {
     infoProducto,
     buscarProductos,
     mostrarImagen,
-    mostrarProductosVendedor
+    mostrarProductosVendedor,
 }
