@@ -1,0 +1,16 @@
+<app-menu></app-menu>
+
+<div class="detalle-producto">
+    <h1>Detalles del Producto</h1>
+  
+    <div class="producto-info">
+      <img [src]="url + producto[0].imagen" alt="{{ producto[0].nombre }}" class="producto-imagen" />
+  
+      <div class="producto-detalles" >
+        <h2>{{ producto[0].nombre }}</h2>
+        <p><strong>Descripción:</strong> {{ producto[0].descripcion }}</p>
+        <p><strong>Stock:</strong> {{ producto[0].stock }}</p>
+        <p><strong>Costo de Venta:</strong> {{ producto[0].costoVenta }}</p>
+      </div>
+    </div>
+  </div>

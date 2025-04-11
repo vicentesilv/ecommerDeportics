@@ -1,4 +1,3 @@
-import { Busqueda } from './../interfaces/busqueda';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 

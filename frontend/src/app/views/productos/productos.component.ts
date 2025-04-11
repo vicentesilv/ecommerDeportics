@@ -1,10 +1,9 @@
-import { Busqueda } from './../../interfaces/busqueda';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MenuComponent } from '../../components/menu/menu.component';
 import { ProductosService } from '../../services/productos.service';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -17,21 +16,14 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
   styleUrl: './productos.component.css'
 })
 export class ProductosComponent implements OnInit{
-  accion: string = '';
   rol = localStorage.getItem('rol');
   id = localStorage.getItem('id');
   token = localStorage.getItem('token');
   url = "http://localhost:3000/api/productos/mostrarImagen/";
-  producto: any = {};
   productos: any[] = [];
   nombreProducto: string = '';
   
-  Busqueda: Busqueda[] = [
-    {
-      id: this.id || '',
-      nombre: this.nombreProducto
-    }
-  ];
+
   constructor(
     private fb: FormBuilder,
     private servicio : ProductosService

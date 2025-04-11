@@ -7,6 +7,7 @@ import { ResetearContrasenaComponent } from './pages/auth/resetear-contrasena/re
 import { AdminPanelComponent } from './pages/admin/admin-panel/admin-panel.component';
 import { InfoComponent } from './views/info/info.component';
 import { ProductosComponent } from './views/productos/productos.component';
+import { DetalleProductoComponent } from './views/detalle-producto/detalle-producto.component';
 
 export const routes: Routes = [
     // auth routes
@@ -24,6 +25,7 @@ export const routes: Routes = [
     // generals routes
     { path: "info", component: InfoComponent },
     { path: "productos" ,component: ProductosComponent},
+    { path: "detallesProducto", component: DetalleProductoComponent },
     // { path: "productos", component:  },
 
 
