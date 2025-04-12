@@ -43,7 +43,7 @@
     <h2>Crear Producto</h2>
       <input type="text" name="" [(ngModel)]="formData.nombre" id="" placeholder="Nombre producto" required />
       <input type="text" name="" [(ngModel)]="formData.descripcion" id="" placeholder="Descripcion producto" required />
-      <input type="text" name="" [(ngModel)]="formData.imagen" id="" placeholder="Imagen producto" required />
+      <input accept="image/png" type="file"  name="" [(ngModel)]="imagen" id="imagen" placeholder="Imagen producto" required />
       <input type="number" name="" [(ngModel)]="formData.costoProduccion" id="" placeholder="Costo produccion producto" required />
       <input type="number" name="" [(ngModel)]="formData.costoVenta" id="" placeholder="Costo venta producto" required />
       <input type="number" name="" [(ngModel)]="formData.stock" id="" placeholder="Stock producto" required />

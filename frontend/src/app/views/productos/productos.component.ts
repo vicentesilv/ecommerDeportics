@@ -21,15 +21,16 @@ export class ProductosComponent implements OnInit{
   token = localStorage.getItem('token');
   url = "http://localhost:3000/api/productos/mostrarImagen/";
   productos: any[] = [];
+  imagen = '';
   formData: any = {
     id: '',
     nombre: '',
     descripcion: '',
     stock: '',
-    imagen: '',
     costoVenta: '',
     costoProduccion: '',
-    status: ''
+    status: '',
+    idVendedor: ''
   };
   nombreProducto: string = '';
   
@@ -87,6 +88,33 @@ export class ProductosComponent implements OnInit{
   }
 
   crearProducto() {
+    this.formData.idVendedor = this.id;
+    console.log(this.formData);
+    
+    const inputElement = document.querySelector('#imagen') as HTMLInputElement;
+    const file = inputElement?.files?.[0] || null;
+
+    if (!file) {
+      alert('Por favor selecciona una imagen.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('imagen', file);
+    formData.append('id', this.formData.id);
+    formData.append('nombre', this.formData.nombre);
+    formData.append('descripcion', this.formData.descripcion);
+    formData.append('stock', this.formData.stock);
+    formData.append('costoVenta', this.formData.costoVenta);
+    formData.append('costoProduccion', this.formData.costoProduccion);
+    formData.append('status', this.formData.status);
+    formData.append('creadopor', this.formData.idVendedor);
+
+    this.servicio.crearProducto(formData, this.token || '').subscribe(
+      (data: any) => {
+      this.productoslist();
+      }
+    );
     
   }
 

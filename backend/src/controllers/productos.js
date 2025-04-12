@@ -3,10 +3,11 @@ const path = require('path');
 const sharp = require('sharp');
 const db = require('../config/dbConeccion');
 const fs = require('fs');
+const { log } = require('console');
 
 const crearProducto = async (req, res) => {
     const {creadopor,nombre,descripcion,stock,costoVenta,costoProduccion,status} = req.body;
-
+   
     if (!req.files || !req.files.imagen) {
         return res.status(400).json({ error: 'La imagen es requerida.' });
     }
@@ -15,9 +16,18 @@ const crearProducto = async (req, res) => {
     const rutaImagen = path.join(__dirname, '../imagenes', nombreArchivo);
     const maxWidth = 400;
     const maxHeight = 700;
+    console.log('nombre', nombre);
+    console.log('descripcion', descripcion);
+    console.log('stock', stock);
+    console.log('costoVenta', costoVenta);
+    console.log('costoProduccion', costoProduccion);
+    console.log('status', status);
+    console.log('imagen', nombreArchivo);
+    console.log('creadopor', creadopor);
     try {
         const [resultado] = await db.query('insert into productos (nombre,descripcion,stock,costoVenta,costoProduccion,status,imagen,creado_por) values (?,?,?,?,?,?,?,?)',
             [nombre, descripcion, stock, costoVenta, costoProduccion, status, nombreArchivo, creadopor]);
+        log('resultado', resultado);
         try{
             await sharp(imagen.data)
             .resize(maxWidth, maxHeight, {

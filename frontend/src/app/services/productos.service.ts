@@ -25,8 +25,11 @@ export class ProductosService {
     return this.http.get(`${this.apiUrl}/mostrarProductosVendedor/${id}`, { headers });
   }
   
-  crearProducto(producto: any, token: string): any {
+  crearProducto(producto: any,token: string): any {
     let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    // const formData = new FormData();
+    // formData.append('producto', JSON.stringify(producto));
+    // formData.append('imagen', producto.imagen);
     return this.http.post(`${this.apiUrl}/crearProducto`, producto, { headers });
   }
   
