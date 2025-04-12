@@ -6,7 +6,7 @@
 </div>
   <div class="crear" *ngIf="token && rol == 'vendedor'">
     <!-- (click)="abrirModal()" -->
-    <button>Crear Producto</button>
+    <button (click)="abrirModal()">Crear Producto</button>
   </div>
   <div class="productos">
     <div class="producto" *ngFor="let producto of productos">
@@ -33,10 +33,27 @@
       </div>
     </div>
   </div>
+</div>
 
 
 
+<div class="modal">
+  <div class="modal-content">
+    <button class="close" (click)="cerrarModal()">&times;</button>
+    <h2>Crear Producto</h2>
+      <input type="text" name="" [(ngModel)]="formData.nombre" id="" placeholder="Nombre producto" required />
+      <input type="text" name="" [(ngModel)]="formData.descripcion" id="" placeholder="Descripcion producto" required />
+      <input type="text" name="" [(ngModel)]="formData.imagen" id="" placeholder="Imagen producto" required />
+      <input type="number" name="" [(ngModel)]="formData.costoProduccion" id="" placeholder="Costo produccion producto" required />
+      <input type="number" name="" [(ngModel)]="formData.costoVenta" id="" placeholder="Costo venta producto" required />
+      <input type="number" name="" [(ngModel)]="formData.stock" id="" placeholder="Stock producto" required />
+      <select name="" [(ngModel)]="formData.status" id="">
+        <option value="activo">Activo</option>
+        <option value="inactivo">Inactivo</option>
+      </select>
+      <button (click)="crearProducto()">Crear Producto</button>
 
-
+  </div>
+</div>
 
 

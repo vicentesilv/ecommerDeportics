@@ -3,15 +3,15 @@ import { Component, OnInit } from '@angular/core';
 import { MenuComponent } from '../../components/menu/menu.component';
 import { ProductosService } from '../../services/productos.service';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule,  } from '@angular/forms';
 
 
 
 
 @Component({
   selector: 'app-productos',
-  imports: [MenuComponent,FormsModule, CommonModule,HttpClientModule,ReactiveFormsModule],
-  providers: [ProductosService,ReactiveFormsModule],
+  imports: [MenuComponent,FormsModule, CommonModule,HttpClientModule],
+  providers: [ProductosService,],
   templateUrl: './productos.component.html',
   styleUrl: './productos.component.css'
 })
@@ -21,6 +21,16 @@ export class ProductosComponent implements OnInit{
   token = localStorage.getItem('token');
   url = "http://localhost:3000/api/productos/mostrarImagen/";
   productos: any[] = [];
+  formData: any = {
+    id: '',
+    nombre: '',
+    descripcion: '',
+    stock: '',
+    imagen: '',
+    costoVenta: '',
+    costoProduccion: '',
+    status: ''
+  };
   nombreProducto: string = '';
   
 
@@ -76,8 +86,34 @@ export class ProductosComponent implements OnInit{
 
   }
 
+  crearProducto() {
+    
+  }
+
   agregarAlCarrito(id: string) {
 
+  }
+
+  cerrarModal() {
+    let modal = document.querySelector('.modal');
+    if (!modal) {
+      console.error('Modal element not found');
+      return;
+    }
+    modal.getAttribute('style')
+      ?.includes('display: none') 
+       modal.setAttribute('style', 'display: none')
+  }
+  abrirModal() {
+    let modal = document.querySelector('.modal');
+    if (!modal) {
+      console.error('Modal element not found');
+      return;
+    }
+    modal.getAttribute('style')
+      ?.includes('display: none') 
+       modal.setAttribute('style', 'display: flex')
+    
   }
 
 }
