@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, httpResource } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MenuComponent } from '../../components/menu/menu.component';
 import { ProductosService } from '../../services/productos.service';
@@ -16,6 +16,7 @@ import { FormBuilder, FormsModule,  } from '@angular/forms';
   styleUrl: './productos.component.css'
 })
 export class ProductosComponent implements OnInit{
+  accion = ""
   rol = localStorage.getItem('rol');
   id = localStorage.getItem('id');
   token = localStorage.getItem('token');
@@ -115,8 +116,11 @@ export class ProductosComponent implements OnInit{
       this.productoslist();
       }
     );
+    window.location.reload();
     
   }
+
+
 
   agregarAlCarrito(id: string) {
 
@@ -132,7 +136,8 @@ export class ProductosComponent implements OnInit{
       ?.includes('display: none') 
        modal.setAttribute('style', 'display: none')
   }
-  abrirModal() {
+  abrirModal(accion: string) {
+    this.accion = accion;
     let modal = document.querySelector('.modal');
     if (!modal) {
       console.error('Modal element not found');

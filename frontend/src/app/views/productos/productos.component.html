@@ -6,7 +6,7 @@
 </div>
   <div class="crear" *ngIf="token && rol == 'vendedor'">
     <!-- (click)="abrirModal()" -->
-    <button (click)="abrirModal()">Crear Producto</button>
+    <button (click)="abrirModal('crear')">Crear Producto</button>
   </div>
   <div class="productos">
     <div class="producto" *ngFor="let producto of productos">
@@ -40,7 +40,7 @@
 <div class="modal">
   <div class="modal-content">
     <button class="close" (click)="cerrarModal()">&times;</button>
-    <h2>Crear Producto</h2>
+    <h2>{{accion}} Producto</h2>
       <input type="text" name="" [(ngModel)]="formData.nombre" id="" placeholder="Nombre producto" required />
       <input type="text" name="" [(ngModel)]="formData.descripcion" id="" placeholder="Descripcion producto" required />
       <input accept="image/png" type="file"  name="" [(ngModel)]="imagen" id="imagen" placeholder="Imagen producto" required />
@@ -51,7 +51,7 @@
         <option value="activo">Activo</option>
         <option value="inactivo">Inactivo</option>
       </select>
-      <button (click)="crearProducto()">Crear Producto</button>
+      <button (click)="crearProducto()" >Crear Producto</button>
 
   </div>
 </div>
