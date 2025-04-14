@@ -41,24 +41,18 @@
   <div class="modal-content">
     <button class="close" (click)="cerrarModal()">&times;</button>
     <h2>{{accion}} Producto</h2>
-      <span>nombre actual {{ producto.nombre}}</span>
       <input type="text" name="" [(ngModel)]="formData.nombre" id="" placeholder="Nombre producto" required />
-      <span>descripcion actual {{ producto.descripcion}}</span>
       <input type="text" name="" [(ngModel)]="formData.descripcion" id="" placeholder="Descripcion producto" required />
       <input accept="image/png" *ngIf="accion == 'crear'" type="file"  name="" [(ngModel)]="imagen" id="imagen" placeholder="Imagen producto" required />
-      <span>costo produccion actual {{ producto.costoProduccion}}</span>
       <input type="number" name="" [(ngModel)]="formData.costoProduccion" id="" placeholder="Costo produccion producto" required />
-      <span>costo venta actual {{ producto.costoVenta}}</span>
       <input type="number" name="" [(ngModel)]="formData.costoVenta" id="" placeholder="Costo venta producto" required />
-      <span>stock actual {{ producto.stock}}</span>
       <input type="number" name="" [(ngModel)]="formData.stock" id="" placeholder="Stock producto" required />
-      <span>estado actual {{ producto.status}}</span>
       <select name="" [(ngModel)]="formData.status" id="">
         <option value="activo">Activo</option>
         <option value="inactivo">Inactivo</option>
       </select>
       <button (click)="crearProducto()" *ngIf="accion == 'crear'">Crear Producto</button>
-      <button (click)="editarProducto(producto.id)" *ngIf="accion == 'editar'">editar Producto</button>
+      <button (click)="editarProducto(formData.id)" *ngIf="accion == 'editar'">editar Producto</button>
 
 
   </div>
