@@ -14,7 +14,7 @@ export class ProductosService {
   buscarProductos(nombre: string): any {
     return this.http.get(`${this.apiUrl}/buscarProductos/${nombre}`);
   }
-  infoProdcto(id: string): any {
+  infoProducto(id: string): any {
     return this.http.get(`${this.apiUrl}/infoProducto/${id}`);
   }
   

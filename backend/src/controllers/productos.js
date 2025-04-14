@@ -16,18 +16,9 @@ const crearProducto = async (req, res) => {
     const rutaImagen = path.join(__dirname, '../imagenes', nombreArchivo);
     const maxWidth = 400;
     const maxHeight = 700;
-    console.log('nombre', nombre);
-    console.log('descripcion', descripcion);
-    console.log('stock', stock);
-    console.log('costoVenta', costoVenta);
-    console.log('costoProduccion', costoProduccion);
-    console.log('status', status);
-    console.log('imagen', nombreArchivo);
-    console.log('creadopor', creadopor);
     try {
         const [resultado] = await db.query('insert into productos (nombre,descripcion,stock,costoVenta,costoProduccion,status,imagen,creado_por) values (?,?,?,?,?,?,?,?)',
             [nombre, descripcion, stock, costoVenta, costoProduccion, status, nombreArchivo, creadopor]);
-        log('resultado', resultado);
         try{
             await sharp(imagen.data)
             .resize(maxWidth, maxHeight, {
@@ -56,9 +47,9 @@ const eliminarProducto = async (req, res) => {
 
 const editarProducto = async (req, res) => {
     const {id} = req.params;
-    const {editadopor,nombre,descripcion,stock,costoVenta,costoProduccion,status} = req.body;
+    const {nombre,descripcion,stock,costoVenta,costoProduccion,status} = req.body;
     try{
-        const [editcion] = db.query('update productos set nombre = ?,descripcion = ?,stock = ?,costoVenta = ?,costoProduccion = ?,status = ?,editado_por = ? where id = ?', [nombre,descripcion,stock,costoVenta,costoProduccion,status,editadopor,id]);
+        const [editcion] = db.query('update productos set nombre = ?,descripcion = ?,stock = ?,costoVenta = ?,costoProduccion = ?,status = ? where id = ?', [nombre,descripcion,stock,costoVenta,costoProduccion,status,id]);
         res.json({message: 'Producto editado exitosamente'});
     }catch(error){
         return res.status(500).json({message: error.message});
@@ -66,7 +57,7 @@ const editarProducto = async (req, res) => {
 }
 const mostrarProductos = async (req, res) => {
     try {
-        const [productos] = await db.query('select * from productos');
+        const [productos] = await db.query('select * from productos where status = "activo"');
         res.json(productos);
     } catch (error) {
         return res.status(500).json({message: error.message});

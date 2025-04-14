@@ -23,6 +23,7 @@ export class ProductosComponent implements OnInit{
   url = "http://localhost:3000/api/productos/mostrarImagen/";
   productos: any[] = [];
   imagen = '';
+  producto : any = {}
   formData: any = {
     id: '',
     nombre: '',
@@ -31,7 +32,7 @@ export class ProductosComponent implements OnInit{
     costoVenta: '',
     costoProduccion: '',
     status: '',
-    idVendedor: ''
+    idVendedor: '',
   };
   nombreProducto: string = '';
   
@@ -110,6 +111,7 @@ export class ProductosComponent implements OnInit{
     formData.append('costoProduccion', this.formData.costoProduccion);
     formData.append('status', this.formData.status);
     formData.append('creadopor', this.formData.idVendedor);
+    formData.append('editadopor', this.formData.idVendedor);
 
     this.servicio.crearProducto(formData, this.token || '').subscribe(
       (data: any) => {
@@ -118,6 +120,17 @@ export class ProductosComponent implements OnInit{
     );
     window.location.reload();
     
+  }
+
+  editarProducto(id: string) {
+    this.formData.editadoPor = this.id;
+    this.servicio.editarProducto(id, this.formData, this.token || '').subscribe(
+      (data: any) => {
+        this.productoslist();
+      }
+    );
+    window.location.reload();
+
   }
 
 
@@ -136,8 +149,19 @@ export class ProductosComponent implements OnInit{
       ?.includes('display: none') 
        modal.setAttribute('style', 'display: none')
   }
-  abrirModal(accion: string) {
+  abrirModal(accion: string,idProducto: string) {
     this.accion = accion;
+    if (accion == "editar") {
+      console.log("editar");
+      
+      this.producto.id = idProducto;
+      this.servicio.infoProducto(idProducto).subscribe(
+        (data: any) => {
+          this.formData = data[0];
+          console.log(this.producto.nombre);
+        }
+      );
+    }
     let modal = document.querySelector('.modal');
     if (!modal) {
       console.error('Modal element not found');

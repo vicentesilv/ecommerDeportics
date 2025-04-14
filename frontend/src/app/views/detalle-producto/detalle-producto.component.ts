@@ -33,7 +33,7 @@ export class DetalleProductoComponent implements OnInit {
     const idProducto = this.route.snapshot.queryParams['idProducto'];
     console.log('ID del producto:', idProducto); // Verifica si el ID se obtiene correctamente
   
-    this.servicio.infoProdcto(idProducto).subscribe(
+    this.servicio.infoProducto(idProducto).subscribe(
       (response: any) => {
         console.log('Datos del producto:', response); // Verifica los datos recibidos
         this.producto = response;
