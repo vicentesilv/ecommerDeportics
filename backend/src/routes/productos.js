@@ -9,8 +9,8 @@ router.get('/infoProducto/:id', infoProducto);
 
 router.get('/mostrarImagen/:nombreImagen', mostrarImagen);
 
-router.post('/crearProducto', crearProducto);
-router.put('/editarProducto/:id', editarProducto );
+router.post('/crearProducto',VerificarToken('vendedor'), crearProducto);
+router.put('/editarProducto/:id',VerificarToken('vendedor'), editarProducto );
 router.delete('/eliminarProducto/:id', eliminarProducto);
 router.get('/mostrarProductosVendedor/:id',VerificarToken('vendedor'), mostrarProductosVendedor);
 

@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { MenuComponent } from '../../components/menu/menu.component';
 import { ProductosService } from '../../services/productos.service';
 import { ActivatedRoute } from '@angular/router';
-
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-detalle-producto',
-  imports: [MenuComponent, HttpClientModule],
+  imports: [MenuComponent, HttpClientModule, CommonModule],
   providers: [ProductosService],
   templateUrl: './detalle-producto.component.html',
   styleUrl: './detalle-producto.component.css'
@@ -16,6 +16,7 @@ export class DetalleProductoComponent implements OnInit {
   //definicion de variables
   producto: any[] = [];
   url = "http://localhost:3000/api/productos/mostrarImagen/";
+  rol = localStorage.getItem('rol');
  
 
   // constructor
