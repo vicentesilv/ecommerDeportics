@@ -2,8 +2,9 @@ import { HttpClientModule, httpResource } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MenuComponent } from '../../components/menu/menu.component';
 import { ProductosService } from '../../services/productos.service';
+import { CarritoService } from '../../services/carrito.service';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormsModule,  } from '@angular/forms';
+import { FormsModule  } from '@angular/forms';
 
 
 
@@ -11,14 +12,15 @@ import { FormBuilder, FormsModule,  } from '@angular/forms';
 @Component({
   selector: 'app-productos',
   imports: [MenuComponent,FormsModule, CommonModule,HttpClientModule],
-  providers: [ProductosService,],
+  providers: [ProductosService,CarritoService],
   templateUrl: './productos.component.html',
   styleUrl: './productos.component.css'
 })
 export class ProductosComponent implements OnInit{
+  cantidad = 0;
   accion = ""
   rol = localStorage.getItem('rol');
-  id = localStorage.getItem('id');
+  idusuario = localStorage.getItem('id');
   token = localStorage.getItem('token');
   url = "http://localhost:3000/api/productos/mostrarImagen/";
   productos: any[] = [];
@@ -37,8 +39,8 @@ export class ProductosComponent implements OnInit{
   
 
   constructor(
-    private fb: FormBuilder,
-    private servicio : ProductosService
+    private servicio : ProductosService,
+    private carritoService: CarritoService
   ) {}
 
   ngOnInit() {
@@ -47,12 +49,12 @@ export class ProductosComponent implements OnInit{
   
   productoslist() {
     if (this.rol == "vendedor") {
-      if (!this.id) {
+      if (!this.idusuario) {
         alert("Error al cargar los productos");
       }
-      console.log(this.id);
+      console.log(this.idusuario);
       
-      this.servicio.mostrarProductosVendedor(this.token || '',this.id || '').subscribe(
+      this.servicio.mostrarProductosVendedor(this.token || '',this.idusuario || '').subscribe(
         (data: any) => {
           this.productos = data;
           console.log(this.productos);
@@ -89,7 +91,7 @@ export class ProductosComponent implements OnInit{
   }
 
   crearProducto() {
-    this.formData.idVendedor = this.id;
+    this.formData.idVendedor = this.idusuario;
     console.log(this.formData);
     
     const inputElement = document.querySelector('#imagen') as HTMLInputElement;
@@ -122,7 +124,7 @@ export class ProductosComponent implements OnInit{
   }
 
   editarProducto(id: string) {
-    this.formData.idVendedor = this.id;
+    this.formData.idVendedor = this.idusuario;
     this.servicio.editarProducto(id, this.formData, this.token || '').subscribe(
       (data: any) => {
         this.productoslist();
@@ -134,8 +136,24 @@ export class ProductosComponent implements OnInit{
 
 
 
-  agregarAlCarrito(id: string) {
-
+  agregarAlCarrito(idProducto: string, cantidad: number) {
+    const data = {
+      idProducto: idProducto,
+      cantidad: cantidad
+    }
+    this.carritoService.agregarAlCarrito(data, this.idusuario || '', this.token || '').subscribe(
+      (data: any) => {
+        console.log(data);
+        alert("Producto agregado al carrito");
+      },
+      (error: any) => {
+        console.error(error);
+        alert(error.error.message);
+      }
+    
+    );  
+    window.location.reload();
+    
   }
 
   cerrarModal() {

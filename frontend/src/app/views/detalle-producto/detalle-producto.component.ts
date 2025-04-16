@@ -3,12 +3,15 @@ import { Component, OnInit } from '@angular/core';
 import { MenuComponent } from '../../components/menu/menu.component';
 import { ProductosService } from '../../services/productos.service';
 import { ActivatedRoute } from '@angular/router';
+import { CarritoService } from '../../services/carrito.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-detalle-producto',
-  imports: [MenuComponent, HttpClientModule, CommonModule],
-  providers: [ProductosService],
+  imports: [MenuComponent, HttpClientModule, CommonModule, FormsModule],
+  providers: [ProductosService, CarritoService],
   templateUrl: './detalle-producto.component.html',
   styleUrl: './detalle-producto.component.css'
 })
@@ -17,11 +20,15 @@ export class DetalleProductoComponent implements OnInit {
   producto: any[] = [];
   url = "http://localhost:3000/api/productos/mostrarImagen/";
   rol = localStorage.getItem('rol');
+  cantidad = 0;
+  idusuario = localStorage.getItem('id');
+  token = localStorage.getItem('token');
  
 
   // constructor
   constructor(
     private servicio: ProductosService,
+    private CarritoService: CarritoService,
     private route: ActivatedRoute,
   ) {}
 
@@ -48,5 +55,25 @@ export class DetalleProductoComponent implements OnInit {
     );
   }
 
+
+  agregarAlCarrito(idProducto: string, cantidad: number) {
+    const data = {
+      idProducto: idProducto,
+      cantidad: cantidad
+    }
+    this.CarritoService.agregarAlCarrito(data, this.idusuario || '', this.token || '').subscribe(
+      (data: any) => {
+        console.log(data);
+        alert("Producto agregado al carrito");
+      },
+      (error: any) => {
+        console.error(error);
+        alert(error.error.message);
+      }
+    
+    );  
+    window.location.reload();
+    
+  }
 
 }

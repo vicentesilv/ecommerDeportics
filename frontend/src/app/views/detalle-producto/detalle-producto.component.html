@@ -15,9 +15,9 @@
         <p><strong>Costo de Venta:</strong> {{ producto[0].costoVenta }}</p>
         <p><strong>Stock:</strong> {{ producto[0].stock }}</p>
 
-        <div class="agregar-carrito">
-          <input min="1" max="{{ producto[0].stock }}" *ngIf="rol == 'cliente'"  type="number" class="cantidad" placeholder="Cantidad de productos" name="" id="">
-          <button *ngIf="rol == 'cliente'">Agregar al Carrito</button>
+        <div class="agregar-carrito" >
+          <input type="number" name="" id=""   min="1" max="{{ producto[0].stock }}" [(ngModel)]="cantidad"  />
+          <button (click)="agregarAlCarrito(producto[0].id, cantidad)">Agregar al Carrito</button>
         </div>
       </div>
     </div>

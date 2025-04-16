@@ -22,13 +22,12 @@
       </div>
 
       <div class="agregarAlCarrito" *ngIf="token && rol == 'cliente'">
-        <input type="number" name="" id="" min="1" max="{{ producto.stock }}" [(ngModel)]="producto.cantidad" placeholder="Cantidad "
-        />
-        <button (click)="agregarAlCarrito(producto)">Agregar al Carrito</button>
+        <input type="number" name="" id=""   min="1" max="{{ producto.stock }}" [(ngModel)]="cantidad"  />
+        <button (click)="agregarAlCarrito(producto.id, cantidad)">Agregar al Carrito</button>
       </div>
       <br />
       <div class="comprarProducto" *ngIf="token && rol == 'cliente'">
-        <button (click)="agregarAlCarrito(producto)">comprar producto</button>
+        <!-- <button (click)="agregarAlCarrito(producto)">comprar producto</button> -->
         <a href="detallesProducto?idProducto={{producto.id}}"><button>ver detalles</button></a>
       </div>
     </div>
