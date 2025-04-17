@@ -43,4 +43,7 @@
 .menu-container .menu-item-logout{
     position: absolute;
     right: 50px;
+}.menu-container .menu-item-logout-Registrarse{
+    position: absolute;
+    right: 190px;
 }

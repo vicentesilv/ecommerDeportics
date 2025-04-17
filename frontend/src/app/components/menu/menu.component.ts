@@ -1,14 +1,21 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-menu',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
+  providers: [Router],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
 export class MenuComponent {
   rol = localStorage.getItem('rol');
+
+  constructor(private router: Router) {
+    this.rol = localStorage.getItem('rol');
+  }
 
   logout() {
     localStorage.removeItem('token');
@@ -21,4 +28,5 @@ export class MenuComponent {
     localStorage.removeItem('edad');
     window.location.href = "/";
   }
+
 } 

@@ -10,9 +10,12 @@ export class CarritoService {
     constructor(private http: HttpClient) { }
 
     agregarAlCarrito(data: any,idusuario: string, token: string): Observable<any> {
-        let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        return this.http.post(`${this.apiUrl}/agregarAlCarrito/${idusuario}`, data, { headers });
+      let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.post(`${this.apiUrl}/agregarAlCarrito/${idusuario}`, data, { headers });
     }
-
+    mostrarCarrito(idusuario: string, token: string): Observable<any> {
+      let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get(`${this.apiUrl}/mostrarCarrito/${idusuario}`, { headers });
+    }
     
 }

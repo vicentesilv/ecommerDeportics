@@ -15,7 +15,10 @@
         <a href="/vendedor/panel" class="menu-item" *ngIf="rol == 'vendedor'">Panel</a>
 
 
-        <a href="" class="menu-item menu-item-logout" (click)="logout()">cerrar Sesion</a>
+        <a href="" class="menu-item menu-item-logout" *ngIf="rol" (click)="logout()">Cerrar Sesion</a>
+        <a href="" [routerLink]="'/registro'" class="menu-item menu-item-logout-Registrarse" *ngIf="!rol" >Registrarse</a>
+        <a href="" class="menu-item menu-item-logout" *ngIf="!rol" [routerLink]="'/inicioSesion'">Iniciar Sesion</a>
+
     </div>
     
 </body>
