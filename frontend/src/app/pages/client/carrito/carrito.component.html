@@ -1,1 +1,12 @@
-<p>carrito works!</p>
+<app-menu></app-menu>
+
+<h1>Carrito</h1>
+<div class="carrito">
+    <div class="producto" *ngFor="let producto of carrito">
+        <h2>{{ producto.nombre }}</h2>
+        <h2>{{ producto.descripcion }}</h2>
+        <p>Precio: {{ producto.costoVenta }}</p>
+        <p>Cantidad: {{ producto.cantidadProducto}}</p>
+        <img src="{{ url }}/{{ producto.imagen }}" alt="{{ producto.producto.nombre }}" />
+    </div>
+</div>

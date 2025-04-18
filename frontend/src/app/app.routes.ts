@@ -8,6 +8,7 @@ import { AdminPanelComponent } from './pages/admin/admin-panel/admin-panel.compo
 import { InfoComponent } from './views/info/info.component';
 import { ProductosComponent } from './views/productos/productos.component';
 import { DetalleProductoComponent } from './views/detalle-producto/detalle-producto.component';
+import { CarritoComponent } from './pages/client/carrito/carrito.component';
 
 export const routes: Routes = [
     // auth routes
@@ -20,6 +21,9 @@ export const routes: Routes = [
 
     //admin
     { path: "admin/panel", component: AdminPanelComponent },
+
+    // client routes
+    { path: "carrito", component:  CarritoComponent},
 
 
     // generals routes
