@@ -32,6 +32,10 @@ export class CarritoComponent implements OnInit {
       this.carritoService.mostrarCarrito(idusuario, token).subscribe(
         (response) => {
           this.carrito = response;
+
+          for (const producto of this.carrito) {
+            this.total += producto.costoVenta * producto.cantidadProducto;
+          }
           console.log('Carrito:', this.carrito);
           
         },
