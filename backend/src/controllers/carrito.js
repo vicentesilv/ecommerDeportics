@@ -10,10 +10,9 @@ const [producto] = await db.query('select stock from productos where id = ?', [i
 if (producto[0].stock < cantidad) {
     return res.status(400).json({message: 'Stock insuficiente para agregar al carrito'});
 }
-const [existingProduct] = await db.query('select * from carrito where id_producto = ? and id_usuario = ?', [idProducto, idusuario]);
-if (existingProduct.length > 0) {
-    await db.query('update carrito set cantidad = cantidad + ? where id_producto = ? and id_usuario = ?', [cantidad, idProducto, idusuario]);
-    await db.query('update productos set stock = stock - ? where id = ?', [cantidad, idProducto]);
+if (db.query('select * from carrito where id_producto = ? and id_usuario = ?', [idProducto,idusuario])) {
+    db.query('update carrito set cantidad = cantidad + ? where id_producto = ? and id_usuario = ?', [cantidad,idProducto,idusuario]);
+    db.query('update productos set stock = stock - ? where id = ?', [cantidad,idProducto]);
 
     // Nueva condición para cambiar el estado a inactivo si el stock llega a 0
     const [updatedProduct] = await db.query('select stock from productos where id = ?', [idProducto]);
@@ -49,14 +48,24 @@ const eliminarDelCarrito = async (req,res) => {
     }
 };
 
-const mostrarCarrito = async (req,res) => {
-    const {id} = req.params;
-    try{
-        const [carrito] = await db.query('select * from carrito where id_usuario = ?', [id]);
-        const [productos] = await db.query('select nombre,descripcion,costoVenta,imagen, cantidad as cantidadProducto from productos,carrito where productos.id = ?', [carrito[0].id_producto]);
+const mostrarCarrito = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [productos] = await db.query(`
+            SELECT 
+                p.nombre, 
+                p.descripcion, 
+                p.costoVenta, 
+                p.imagen, 
+                c.cantidad AS cantidadProducto
+            FROM carrito c
+            JOIN productos p ON p.id = c.id_producto
+            WHERE c.id_usuario = ?
+        `, [id]);
+
         res.json(productos);
-    }catch(error){
-        return res.status(500).json({message: error.message});
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
     }
 };
 
