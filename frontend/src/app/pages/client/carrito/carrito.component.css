@@ -1,0 +1,17 @@
+.carrito{
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+}
+.carrito .producto{
+    width: 400px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: auto;
+}
+.carrito .producto img{
+    width: 90%;
+    margin: 0 5%;
+}
+.carrito .producto h2{
+    text-align: center;
+}

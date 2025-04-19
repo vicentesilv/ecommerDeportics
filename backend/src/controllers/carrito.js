@@ -55,7 +55,8 @@ const mostrarCarrito = async (req, res) => {
             SELECT 
                 p.nombre, 
                 p.descripcion, 
-                p.costoVenta, 
+                p.costoVenta,
+                c.id AS idCarrito, 
                 p.imagen, 
                 c.cantidad AS cantidadProducto
             FROM carrito c

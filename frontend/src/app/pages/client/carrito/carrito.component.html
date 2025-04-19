@@ -3,14 +3,17 @@
 <h1>Carrito</h1>
 <div class="carrito">
     <div class="producto" *ngFor="let producto of carrito">
-        <h2>{{ producto.nombre }}</h2>
+        <h2 >{{ producto.nombre }}</h2>
+        <img src="{{ url }}/{{ producto.imagen }}" alt="{{ producto.nombre }}" />
         <h2>{{ producto.descripcion }}</h2>
         <p>Precio: {{ producto.costoVenta }}</p>
         <p>Subtotal: {{ producto.costoVenta * producto.cantidadProducto }}</p>
-        <p>Cantidad: {{ producto.cantidadProducto}}</p>
-        <img src="{{ url }}/{{ producto.imagen }}" alt="{{ producto.nombre }}" />
+        <p>Cantidad: <input type="text" name="" id="" [(ngModel)]="producto.cantidadProducto"></p> 
+        <p>id producto: {{ producto.idProducto }}</p>
+        <button (click)="eliminarProducto(producto.idCarrito,producto.idProducto,producto.cantidadProducto)">eliminar producto</button>
     </div>
-    <div class="total">
-        <h2>Total: {{ total }}</h2>
-        <button >Pagar</button>
 </div>
+<div class="total">
+    <h2>Total: {{ total }}</h2>
+    <button >comprar</button>
+    <button>vaciar carrito</button>

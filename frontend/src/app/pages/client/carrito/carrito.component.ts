@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../../../services/carrito.service';
 import { MenuComponent } from '../../../components/menu/menu.component';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-carrito',
-  imports: [MenuComponent,HttpClientModule,CommonModule],
+  imports: [MenuComponent,HttpClientModule,CommonModule,FormsModule],
   providers: [CarritoService],
   templateUrl: './carrito.component.html',
   styleUrl: './carrito.component.css'
@@ -48,4 +49,25 @@ export class CarritoComponent implements OnInit {
     }
   }
 
+
+  eliminarProducto(id: any,idProducto: any,cantidad: number) {
+    const params = {
+      idProducto: idProducto,
+      cantidad: cantidad
+    }
+    console.log('ID del producto a eliminar:', id);
+    console.log('ID del producto:', idProducto);
+    console.log('Cantidad del producto:', cantidad);
+    
+    this.carritoService.eliminarCarrito(id,params,localStorage.getItem('token')!).subscribe(
+      (response) => {
+        console.log('Producto eliminado del carrito:', response);
+        window.location.reload();
+      },
+      (error) => {
+        console.error('Error al eliminar el producto del carrito:', error);
+      }
+    );
+
+  }
 }

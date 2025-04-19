@@ -17,5 +17,9 @@ export class CarritoService {
       let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       return this.http.get(`${this.apiUrl}/mostrarCarrito/${idusuario}`, { headers });
     }
+    eliminarCarrito(id:string,params:any,token: string): Observable<any> {
+      let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.delete(`${this.apiUrl}/eliminarDelCarrito/${id}`, { headers });
+    }
     
 }
