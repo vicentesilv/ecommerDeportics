@@ -138,10 +138,10 @@ export class ProductosComponent implements OnInit{
 
   agregarAlCarrito(idProducto: string, cantidad: number) {
     const data = {
-      idProducto: idProducto,
+      idProducto: idProducto,                                                                                                     
       cantidad: cantidad
     }
-    this.carritoService.agregarAlCarrito(data, this.idusuario || '', this.token || '').subscribe(
+    this.carritoService.agregarAlCarrito(data, this.idusuario || '', this.token || '                                                                                                    ').subscribe(
       (data: any) => {
         console.log(data);
         alert("Producto agregado al carrito");

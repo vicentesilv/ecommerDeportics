@@ -70,4 +70,15 @@ export class CarritoComponent implements OnInit {
     );
 
   }
+
+  vaciarCarrito() {
+    this.carritoService.vaciarCarrito(localStorage.getItem('id')!, localStorage.getItem('token')!).subscribe(
+      (response) => {
+        console.log('Carrito vaciado:', response);
+        window.location.reload();
+      },
+      (error) => {
+        console.error('Error al vaciar el carrito:', error);
+      }
+    );}
 }
