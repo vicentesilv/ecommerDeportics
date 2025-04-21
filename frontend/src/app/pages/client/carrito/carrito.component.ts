@@ -89,7 +89,7 @@ export class CarritoComponent implements OnInit {
     this.PedidosService.crearPedido(localStorage.getItem('id') || '', localStorage.getItem('token') || '').subscribe(
       (response:any) => {
         console.log('Pedido creado:', response);
-        window.location.reload();
+        window.location.href = '/pedidos';
       },
       (error:any) => {
         console.error('Error al crear el pedido:', error);

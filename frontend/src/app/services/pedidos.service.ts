@@ -15,7 +15,7 @@ export class PedidosService {
 
   mostrarPedidos(token: string): any {
     let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(`${this.url}/mostrarPedidos`, { headers });
+    return this.http.get(`${this.url}/mostrarOrdenes`, { headers });
   }
 
   detallesOrden(idOrden: string,token: string): any {

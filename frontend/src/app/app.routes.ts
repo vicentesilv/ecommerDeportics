@@ -9,6 +9,7 @@ import { InfoComponent } from './views/info/info.component';
 import { ProductosComponent } from './views/productos/productos.component';
 import { DetalleProductoComponent } from './views/detalle-producto/detalle-producto.component';
 import { CarritoComponent } from './pages/client/carrito/carrito.component';
+import { PedidosComponent } from './pages/client/pedidos/pedidos.component';
 
 export const routes: Routes = [
     // auth routes
@@ -24,6 +25,7 @@ export const routes: Routes = [
 
     // client routes
     { path: "carrito", component:  CarritoComponent},
+    { path: "pedidos", component:  PedidosComponent},
 
 
     // generals routes

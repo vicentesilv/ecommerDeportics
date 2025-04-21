@@ -1,0 +1,52 @@
+.pedidos table{
+    border-collapse: collapse;
+    width: 90%;
+    margin: 0 auto;
+}
+.pedidos th, .pedidos td{
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+.pedidos th{
+    background-color: #f2f2f2;
+}
+.pedidos button{
+   width: 100px;
+   height: 30px;
+   background-color: #007BFF;
+   color: #fff;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   margin: 10px auto;
+   display: block;
+   text-align: center;
+   text-decoration: none;
+   font-size: 16px;
+   font-weight: bold;
+}
+.pedidos button:hover{
+    background-color: #0056b3;
+}
+.pedidos button:active{
+    background-color: #003b80;
+}
+.pedidos .pedido{
+    background-color: #f9f9f9;
+}
+.pedidos .pedido td{
+    text-align: center;
+}
+.pedidos .cancelar button{
+    background-color: #e74c3c;
+}
+.pedidos .cancelar button:hover{
+    background-color: #c0392b;
+}
+.pedidos .pagar button{
+    background-color: #34db66;
+}
+.pedidos .pagar button:hover{
+    background-color: #2980b9;
+}

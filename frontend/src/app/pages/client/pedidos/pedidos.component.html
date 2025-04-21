@@ -1,0 +1,34 @@
+<app-menu></app-menu>
+
+<h1>Pedidos</h1>
+<div class="pedidos">
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Total</th>
+            <th>Estatus</th>
+            <th>Fecha</th>
+            <th colspan="2">Acciones</th>
+        </tr>
+        <tr class="pedido" *ngFor="let pedido of pedidos">
+            <td>{{ pedido.id }}</td>
+            <td>{{ pedido.total }}</td>
+            <td>{{ pedido.estatus }}</td>
+            <td>{{ pedido.fechaOrden }}</td>
+            <td><button >Detalles</button></td>
+            <td class="cancelar" *ngIf="pedido.estatus == 'pagado'"><button >cancelar</button></td>
+            <td class="pagar" *ngIf="pedido.estatus == 'pendiente'"><button >pagar</button></td>
+        </tr>
+    </table>
+</div>
+
+
+
+
+<div class="modalDetalles">
+
+</div>
+
+<div class="modalPagar">
+    
+</div>
