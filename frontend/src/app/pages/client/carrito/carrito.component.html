@@ -9,11 +9,10 @@
         <p>Precio: {{ producto.costoVenta }}</p>
         <p>Subtotal: {{ producto.costoVenta * producto.cantidadProducto }}</p>
         <p>Cantidad: <input type="text" name="" id="" [(ngModel)]="producto.cantidadProducto"></p> 
-        <p>id producto: {{ producto.idProducto }}</p>
         <button (click)="eliminarProducto(producto.idCarrito,producto.idProducto,producto.cantidadProducto)">eliminar producto</button>
     </div>
 </div>
 <div class="total">
     <h2>Total: {{ total }}</h2>
-    <button >comprar</button>
-    <button (click)="vaciarCarrito()">vaciar carrito</button>
+    <button class="comprar" (click)="crearPedido()" >comprar</button>
+    <button class="vaciar" (click)="vaciarCarrito()">vaciar carrito</button>

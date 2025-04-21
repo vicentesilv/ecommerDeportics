@@ -1,3 +1,4 @@
+import { PedidosService } from './../../../services/pedidos.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../../../services/carrito.service';
@@ -8,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-carrito',
   imports: [MenuComponent,HttpClientModule,CommonModule,FormsModule],
-  providers: [CarritoService],
+  providers: [CarritoService,PedidosService],
   templateUrl: './carrito.component.html',
   styleUrl: './carrito.component.css'
 })
@@ -18,6 +19,7 @@ export class CarritoComponent implements OnInit {
   total: number = 0;
   constructor(
     private carritoService: CarritoService,
+    private PedidosService: PedidosService
   ) {}
 
   
@@ -80,5 +82,18 @@ export class CarritoComponent implements OnInit {
       (error) => {
         console.error('Error al vaciar el carrito:', error);
       }
-    );}
+    );
+  }
+
+  crearPedido(){
+    this.PedidosService.crearPedido(localStorage.getItem('id') || '', localStorage.getItem('token') || '').subscribe(
+      (response:any) => {
+        console.log('Pedido creado:', response);
+        window.location.reload();
+      },
+      (error:any) => {
+        console.error('Error al crear el pedido:', error);
+      }
+    );
+  }
 }

@@ -11,7 +11,7 @@ router.get('/mostrarImagen/:nombreImagen', mostrarImagen);
 
 router.post('/crearProducto',VerificarToken('vendedor'), crearProducto);
 router.put('/editarProducto/:id',VerificarToken('vendedor'), editarProducto );
-router.delete('/eliminarProducto/:id', eliminarProducto);
+router.delete('/eliminarProducto/:id', VerificarToken('vendedor'), eliminarProducto);
 router.get('/mostrarProductosVendedor/:id',VerificarToken('vendedor'), mostrarProductosVendedor);
 
 

@@ -10,7 +10,7 @@ const crearOrden = async (req, res) => {
         const [orden] = await db.query('insert into orden (id_usuario,total,estatus) values (?,?,?)', [idUsuario, total, 'pendiente']);
         const id = orden.insertId;
         for(const item of carrrito){
-            await db.query('insert into detalles_orden (id_oreden,id_producto,cantidad,precio) values (?,?,?,?)', [id, item.id_producto, item.cantidad, item.costoVenta]);
+            await db.query('insert into detalles_orden (id_orden,id_producto,cantidad,precio) values (?,?,?,?)', [id, item.id_producto, item.cantidad, item.costoVenta]);
             await db.query('update productos set stock = stock - ? where id = ?', [item.cantidad, item.id_producto]);
         }
         await db.query('delete from carrito where id_usuario = ?', [idUsuario]);
@@ -47,16 +47,7 @@ const motrarOrdenes = async (req, res) => {
     }
 };
 
-const buscarOrden = async (req, res) => {
-    const {idUsuario} = req.params;
-    const {id} = req.body;
-    try {
-        const [pedidos] = await db.query('select * from orden where id = ? and id_usuario = ?', [id, idUsuario]);
-        res.json(pedidos);
-    } catch (error) {
-        return res.status(500).json({message: error.message});
-    }
-};
+
 
 const detallesOrden = async (req, res) => {
     const {id} = req.params;
@@ -72,7 +63,6 @@ const detallesOrden = async (req, res) => {
 module.exports = {
     crearOrden,
     motrarOrdenes,
-    buscarOrden,
     cancelarOrden,
     detallesOrden
 }
