@@ -17,7 +17,7 @@ export class FormPagoComponent implements OnInit {
 
   pago = {
     idOrden: 0,
-    numero_tarjeta: 0,
+    numero_tarjeta: "",
     paypal_correo: '',
     fecha_vencimiento: ''
   };

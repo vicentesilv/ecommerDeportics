@@ -1,0 +1,35 @@
+.form-pago{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    margin: 100px 0 0 0;
+    gap: 5px;
+}
+
+.form-pago input{
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-pago button{
+    width: 50%;
+    margin: 10px 0;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-pago button:hover{
+    background-color: #0056b3;
+}
+
+.form-pago button:disabled{
+    background-color: #ccc;
+    cursor: not-allowed;
+}

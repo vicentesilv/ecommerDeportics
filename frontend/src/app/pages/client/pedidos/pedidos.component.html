@@ -16,7 +16,7 @@
             <td>{{ pedido.estatus }}</td>
             <td>{{ pedido.fechaOrden | date:'dd MMMM yyyy' }}</td>
             <td><a href="detalles-pedido?id={{pedido.id}}"><button >Detalles</button></a></td>
-            <td class="eliminar" *ngIf="pedido.estatus == 'rechazado'"></td>
+            <td class="eliminar" *ngIf="pedido.estatus == 'rechazado' || pedido.estatus == 'cancelado'"></td>
             <td class="cancelar" *ngIf="pedido.estatus == 'aprobado'"><button (click)="calcelarPedido(pedido.id)">cancelar</button></td>
             <td class="pagar" *ngIf="pedido.estatus == 'pendiente'"><button (click)="abrirModal(pedido.id,pedido.total)">pagar</button></td>
         </tr>
