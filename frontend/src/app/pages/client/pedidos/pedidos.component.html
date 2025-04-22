@@ -14,12 +14,19 @@
             <td>{{ pedido.id }}</td>
             <td>{{ pedido.total }}</td>
             <td>{{ pedido.estatus }}</td>
-            <td>{{ pedido.fechaOrden }}</td>
+            <td>{{ pedido.fechaOrden | date:'dd MMMM yyyy' }}</td>
             <td><a href="detalles-pedido?id={{pedido.id}}"><button >Detalles</button></a></td>
-            <td class="cancelar" *ngIf="pedido.estatus == 'pagado'"><button >cancelar</button></td>
-            <td class="pagar" *ngIf="pedido.estatus == 'pendiente'"><button >pagar</button></td>
+            <td class="eliminar" *ngIf="pedido.estatus == 'rechazado'"></td>
+            <td class="cancelar" *ngIf="pedido.estatus == 'aprobado'"><button (click)="calcelarPedido(pedido.id)">cancelar</button></td>
+            <td class="pagar" *ngIf="pedido.estatus == 'pendiente'"><button (click)="abrirModal(pedido.id,pedido.total)">pagar</button></td>
         </tr>
     </table>
+    <div class="modal">
+        <div class="modal-content">
+            <button class="close" (click)="cerrarModal()">&times;</button> 
+            <app-form-pago [idOrden]="id" [monto]="total"></app-form-pago>
+        </div>
+    </div>
 </div>
 
 
@@ -27,6 +34,3 @@
 
 
 
-<div class="modalPagar">
-    
-</div>

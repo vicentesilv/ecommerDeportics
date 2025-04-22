@@ -1,0 +1,12 @@
+<div class="form-pago">
+
+    <h2>Formulario de pago</h2>
+    <p>idOrden {{ idOrden }}</p>
+    <span>ingrese el numero de la tarjeta</span>
+    <input type="text" name="" id="" placeholder="1234123412341234" [(ngModel)]="pago.numero_tarjeta">
+    <span>ingrese la fecha de vencimiento</span>
+    <input type="text" name="" placeholder="mm/aa" id="" [(ngModel)]="pago.fecha_vencimiento">
+    <p>Total: {{ monto }}</p>
+    <button (click)="funcion()" class="pagar">pagar</button>
+</div>
+

@@ -40,12 +40,19 @@
   <div class="modal-content">
     <button class="close" (click)="cerrarModal()">&times;</button>
     <h2>{{accion}} Producto</h2>
+      <span>ingrese el nombre del producto</span>
       <input type="text" name="" [(ngModel)]="formData.nombre" id="" placeholder="Nombre producto" required />
+      <span>ingrese la descripcion del producto</span>
       <input type="text" name="" [(ngModel)]="formData.descripcion" id="" placeholder="Descripcion producto" required />
+      <span *ngIf="accion == 'crear'">ingrese la imagen del producto</span>
       <input accept="image/png" *ngIf="accion == 'crear'" type="file"  name="" [(ngModel)]="imagen" id="imagen" placeholder="Imagen producto" required />
+      <span>ingrese el costo de produccion del producto</span>
       <input type="number" name="" [(ngModel)]="formData.costoProduccion" id="" placeholder="Costo produccion producto" required />
+      <span>ingrese el costo de venta del producto</span>
       <input type="number" name="" [(ngModel)]="formData.costoVenta" id="" placeholder="Costo venta producto" required />
+      <span>ingrese el stock del producto</span>
       <input type="number" name="" [(ngModel)]="formData.stock" id="" placeholder="Stock producto" required />
+      <span>ingrese el status del producto</span>
       <select name="" [(ngModel)]="formData.status" id="">
         <option value="activo">Activo</option>
         <option value="inactivo">Inactivo</option>

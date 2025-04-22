@@ -28,9 +28,9 @@ export class PedidosService {
     return this.http.get(`${this.url}/detalleOrden/${id}`, { headers });
   }
 
-  cancelarPedido(id: string,token: string): any {
+  cancelarPedido(idOrden: string,token: string): any {
     let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.delete(`${this.url}/cancelarPedido/${id}`, { headers });
+    return this.http.delete(`${this.url}/cancelarOrden/${idOrden}`, { headers });
   }
 
 }

@@ -9,7 +9,7 @@ const procesarPago = async (req, res) => {
         const monto = orden[0].total;
         let estado = "pendiente";
 
-            estado = await procesarPagoTarjeta(monto);
+        estado = "aprobado";
         
 
         // Guardar el pago en la base de datos
@@ -17,15 +17,19 @@ const procesarPago = async (req, res) => {
             INSERT INTO pago (metodo, monto, estado, numero_tarjeta, fecha_vencimiento, paypal_correo)
             VALUES (?, ?, ?, ?, ?, ?)
         `;
-        db.query(query, ["tarjeta", monto, estado, numero_tarjeta, fecha_vencimiento, paypal_correo], (err, result) => {
-            if (err) {
-                console.error(err);
-                db.query('update orden set estatus = ? where id = ?', ['rechazado', idOrden]);
-                return res.status(500).send('Error al guardar el pago en la base de datos');
-            }
-            db.query('update orden set estatus = ? where id = ?', [estado, idOrden]);
-            res.status(200).send({ estado, id: result.insertId });
-        });
+        const [update] = await db.query('update orden set estatus = ? where id = ?', [estado, idOrden]);
+
+        res.status(200).send({ "pago": estado });
+
+        // db.query(query, ["tarjeta", monto, estado, numero_tarjeta, fecha_vencimiento, paypal_correo], (err, result) => {
+        //     if (err) {
+        //         console.error(err);
+        //         db.query('update orden set estatus = ? where id = ?', ['rechazado', idOrden]);
+        //         return res.status(500).send('Error al guardar el pago en la base de datos');
+        //     }
+            // db.query('update orden set estatus = ? where id = ?', ["pagado", idOrden]);
+            // res.status(200).send({ estado, id: result.insertId });
+        // });
     } catch (error) {
         console.error(error);
         res.status(500).send('Error al procesar el pago');

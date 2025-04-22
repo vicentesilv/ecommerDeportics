@@ -12,7 +12,7 @@
         <a href="/productos" class="menu-item">Productos</a>
         <a href="/carrito" class="menu-item" *ngIf="rol == 'cliente'">Carrito</a>
         <a href="/pedidos" class="menu-item" *ngIf="rol == 'cliente'">Pedidos</a>
-        <a href="/vendedor/panel" class="menu-item" *ngIf="rol == 'vendedor'">Panel</a>
+        <!-- <a href="/vendedor/panel" class="menu-item" *ngIf="rol == 'vendedor'">Panel</a> -->
 
 
         <a href="" class="menu-item menu-item-logout" *ngIf="rol" (click)="logout()">Cerrar Sesion</a>
