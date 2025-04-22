@@ -15,7 +15,7 @@
             <td>{{ pedido.total }}</td>
             <td>{{ pedido.estatus }}</td>
             <td>{{ pedido.fechaOrden }}</td>
-            <td><button >Detalles</button></td>
+            <td><a href="detalles-pedido?id={{pedido.id}}"><button >Detalles</button></a></td>
             <td class="cancelar" *ngIf="pedido.estatus == 'pagado'"><button >cancelar</button></td>
             <td class="pagar" *ngIf="pedido.estatus == 'pendiente'"><button >pagar</button></td>
         </tr>
@@ -25,9 +25,7 @@
 
 
 
-<div class="modalDetalles">
 
-</div>
 
 <div class="modalPagar">
     

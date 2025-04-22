@@ -18,14 +18,19 @@ export class PedidosService {
     return this.http.get(`${this.url}/mostrarOrdenes`, { headers });
   }
 
-  detallesOrden(idOrden: string,token: string): any {
+  detallesOrden(id: string,token: string): any {
     let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(`${this.url}/detallesOrden/${idOrden}`, { headers });
+    return this.http.get(`${this.url}/detallesOrden/${id}`, { headers });
   }
 
-  cancelarPedido(idOrden: string,token: string): any {
+  detalleOrden(id: string,token: string): any {
     let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.delete(`${this.url}/cancelarPedido/${idOrden}`, { headers });
+    return this.http.get(`${this.url}/detalleOrden/${id}`, { headers });
+  }
+
+  cancelarPedido(id: string,token: string): any {
+    let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.delete(`${this.url}/cancelarPedido/${id}`, { headers });
   }
 
 }

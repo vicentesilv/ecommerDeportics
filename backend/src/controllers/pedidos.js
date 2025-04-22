@@ -52,7 +52,17 @@ const motrarOrdenes = async (req, res) => {
 const detallesOrden = async (req, res) => {
     const {id} = req.params;
     try {
-        const [detalles] = await db.query('select * from detalles_orden where id_oreden = ?', [id]);
+        const [detalles] = await db.query('select * from detalles_orden where id_orden = ?', [id]);
+        res.json(detalles);
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+};
+
+const detalleOrden = async (req, res) => {
+    const {id} = req.params;
+    try {
+        const [detalles] = await db.query('select * from orden where id = ?', [id]);
         res.json(detalles);
     } catch (error) {
         return res.status(500).json({message: error.message});
@@ -64,5 +74,6 @@ module.exports = {
     crearOrden,
     motrarOrdenes,
     cancelarOrden,
-    detallesOrden
+    detallesOrden,
+    detalleOrden
 }

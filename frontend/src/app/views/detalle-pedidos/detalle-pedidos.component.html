@@ -1,0 +1,21 @@
+<app-menu></app-menu>
+<a href="/pedidos">&larr;</a>
+<div class="detalles-pedido">
+    <section >
+        <header>detalles del pedido de la fecha {{ pedido[0].fechaOrden | date:'dd MMMM yyyy' }}</header>
+        <main>
+            <div class="producto" *ngFor="let producto of detallesProductos; index as i">
+                <h1>{{ producto[0].nombre }}</h1>
+                <img src="{{ url + producto[0].imagen }}" alt="">
+                <p>{{ producto[0].descripcion }}</p>
+                <p>Precio: {{ producto[0].costoVenta }}</p>
+                <p>Cantidad: {{  detallePedido[i].cantidad }}</p>
+                <p> Subtotal: {{ producto[0].costoVenta * detallePedido[i].cantidad }}</p>
+            </div>
+        </main>
+        <footer>
+            <h3>Total: {{ pedido[0].total }}</h3>
+            <h3 class="estado">estado: {{ pedido[0].estatus }}</h3>
+        </footer>
+    </section>
+</div>

@@ -1,0 +1,56 @@
+.detalles-pedido {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+.detalles-pedido section{
+    width: 100%;
+}
+.detalles-pedido section header{
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #667eea;
+}
+.detalles-pedido section main{
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.detalles-pedido section main .producto{
+    display: flex;
+    background: white;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+.detalles-pedido section main .producto h1{
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #667eea;
+}
+a{
+    text-decoration: none;
+    width: 40px;
+    height: 40px;
+    background: #667eea;
+    border-radius: 50%;
+    display: flex;
+    color: white;
+    font-size: 50px;
+    margin-right: 10px;
+    align-items: center;
+    margin: 0 0 0 3%;
+    cursor: pointer;
+    
+    transition: all 0.3s ease;
+}
